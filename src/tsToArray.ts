@@ -5,7 +5,7 @@ export type ITranscriptLine = {
 };
 
 export default function parseTranscript(vtt: string): ITranscriptLine[] {
-	// 1. sepparate lines at timestamp's open bracket
+	// 1. separate lines at timestamp's open bracket
 	const lines: string[] = vtt.split("[");
 
 	// 2. remove the first line, which is empty

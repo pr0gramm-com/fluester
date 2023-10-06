@@ -45,25 +45,23 @@ try {
 	// ensure command exists in local path
 	if (!shell.which(WHISPER_CPP_MAIN_PATH)) {
 		shell.echo(
-			"[whisper-node] Problem. whisper.cpp not initialized. Current shelljs directory: ",
+			"problem. whisper.cpp not initialized. Current shelljs directory: ",
 			__dirname,
 		);
-		shell.echo(
-			"[whisper-node] Attempting to run 'make' command in /whisper directory...",
-		);
+		shell.echo("attempting to run 'make' command in /whisper directory...");
 
 		// todo: move this
 		shell.exec("make", defaultShellOptions);
 
 		if (!shell.which(WHISPER_CPP_MAIN_PATH)) {
 			console.log(
-				"[whisper-node] Problem. 'make' command failed. Please run 'make' command in /whisper directory. Current shelljs directory: ",
+				"problem. 'make' command failed. Please run 'make' command in /whisper directory. Current shelljs directory: ",
 				__dirname,
 			);
 			process.exit(1);
 		} else
 			console.log(
-				"[whisper-node] 'make' command successful. Current shelljs directory: ",
+				"'make' command successful. Current shelljs directory: ",
 				__dirname,
 			);
 	}

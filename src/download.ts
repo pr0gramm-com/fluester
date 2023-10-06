@@ -8,7 +8,8 @@ import shell from "shelljs";
 
 import { createInterface } from "node:readline/promises";
 
-import { DEFAULT_MODEL, NODE_MODULES_MODELS_PATH } from "./constants";
+import { modelStats } from "./model.js";
+import { DEFAULT_MODEL, NODE_MODULES_MODELS_PATH } from "./constants.js";
 
 const MODELS_LIST = [
 	"tiny",
@@ -57,50 +58,7 @@ export default async function downloadModel() {
 		// shell.exec("echo $PWD");
 		shell.cd(NODE_MODULES_MODELS_PATH);
 
-		const models = {
-			tiny: {
-				disk: "75 MB",
-				ram: "~390 MB",
-			},
-			"tiny.en": {
-				disk: "75 MB",
-				ram: "~390 MB",
-			},
-			base: {
-				disk: "142 MB",
-				ram: "~500 MB",
-			},
-			"base.en": {
-				disk: "142 MB",
-				ram: "~500 MB",
-			},
-			small: {
-				disk: "466 MB",
-				ram: "~1.0 GB",
-			},
-			"small.en": {
-				disk: "466 MB",
-				ram: "~1.0 GB",
-			},
-			medium: {
-				disk: "1.5 GB",
-				ram: "~2.6 GB",
-			},
-			"medium.en": {
-				disk: "1.5 GB",
-				ram: "~2.6 GB",
-			},
-			"large-v1": {
-				disk: "2.9 GB",
-				ram: "~4.7 GB",
-			},
-			large: {
-				disk: "2.9 GB",
-				ram: "~4.7 GB",
-			},
-		};
-
-		console.table(models);
+		console.table(modelStats);
 
 		// ensure running in correct path
 		if (!shell.which("./download-ggml-model.sh")) {
@@ -117,7 +75,7 @@ export default async function downloadModel() {
 		// todo: check if windows or unix to run bat command or .sh command
 		shell.exec(`${scriptPath} ${modelName}`);
 
-		console.log("[whisper-node] Attempting to compile model...");
+		console.log("Attempting to compile model...");
 
 		// move up directory, run make in whisper.cpp
 		shell.cd("../");

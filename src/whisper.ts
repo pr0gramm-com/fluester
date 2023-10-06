@@ -1,6 +1,8 @@
 // todo: remove all imports from file
-import { existsSync } from "fs";
-import { DEFAULT_MODEL } from "./constants";
+import { existsSync } from "node:fs";
+
+import { DEFAULT_MODEL } from "./constants.js";
+import { modelList, ModelName } from "./model.js";
 
 // return as syntax for whisper.cpp command
 export const createCppCommand = ({
@@ -18,13 +20,13 @@ const modelPathOrName = (mn: string, mp: string) => {
 	if (mn && mp) throw "Submit a modelName OR a modelPath. NOT BOTH!";
 	else if (!mn && !mp) {
 		console.log(
-			"[whisper-node] No 'modelName' or 'modelPath' provided. Trying default model:",
+			"No 'modelName' or 'modelPath' provided. Trying default model:",
 			DEFAULT_MODEL,
 			"\n",
 		);
 
 		// second modelname check to verify is installed in directory
-		const modelPath = `./models/${MODELS_LIST[DEFAULT_MODEL]}`;
+		const modelPath = `./models/${modelList[DEFAULT_MODEL]}`;
 
 		if (!existsSync(modelPath)) {
 			// throw `'${mn}' not downloaded! Run 'npx whisper-node download'`;
@@ -36,9 +38,9 @@ const modelPathOrName = (mn: string, mp: string) => {
 	// modelpath
 	else if (mp) return mp;
 	// modelname
-	else if (MODELS_LIST[mn]) {
+	else if (modelList[mn]) {
 		// second modelname check to verify is installed in directory
-		const modelPath = `./models/${MODELS_LIST[mn]}`;
+		const modelPath = `./models/${modelList[mn]}`;
 
 		if (!existsSync(modelPath)) {
 			throw `'${mn}' not found! Run 'npx whisper-node download'`;
@@ -66,23 +68,9 @@ const getFlags = (flags: IFlagTypes): string => {
 	return s;
 };
 
-// model list: https://github.com/ggerganov/whisper.cpp/#more-audio-samples
-export const MODELS_LIST = {
-	tiny: "ggml-tiny.bin",
-	"tiny.en": "ggml-tiny.en.bin",
-	base: "ggml-base.bin",
-	"base.en": "ggml-base.en.bin",
-	small: "ggml-small.bin",
-	"small.en": "ggml-small.en.bin",
-	medium: "ggml-medium.bin",
-	"medium.en": "ggml-medium.en.bin",
-	"large-v1": "ggml-large-v1.bin",
-	large: "ggml-large.bin",
-};
-
 type CppCommandTypes = {
 	filePath: string;
-	modelName?: string;
+	modelName?: ModelName;
 	modelPath?: string;
 	options?: IFlagTypes;
 };

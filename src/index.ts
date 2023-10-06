@@ -11,13 +11,13 @@ interface IOptions {
 }
 
 // returns array[]: {start, end, speech}
-export const whisper = async (
+export async function whisper(
 	filePath: string,
 	options?: IOptions,
-): Promise<ITranscriptLine[]> => {
-	try {
-		console.log("[whisper-node] Transcribing:", filePath, "\n");
+): Promise<ITranscriptLine[]> {
+	console.log("Transcribing:", filePath, "\n");
 
+	try {
 		// todo: combine steps 1 & 2 into sepparate function called whisperCpp (createCppCommand + shell)
 
 		// 1. create command string for whisper.cpp
@@ -33,10 +33,9 @@ export const whisper = async (
 		const transcript = await shell(command, options?.shellOptions);
 
 		// 3. parse whisper response string into array
-		const transcriptArray = transcriptToArray(transcript);
-
-		return transcriptArray;
+		return transcriptToArray(transcript);
 	} catch (error) {
-		console.log("[whisper-node] Problem:", error);
+		console.error("Problem:");
+		console.error(error);
 	}
-};
+}
