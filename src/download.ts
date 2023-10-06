@@ -22,26 +22,26 @@ const askModel = async () => {
 		`\nEnter model name (e.g. 'base.en') or 'cancel' to exit\n(ENTER for base.en): `,
 	);
 
-	if (answer === "cancel") {
-		console.log(
-			"Exiting model downloader. Run again with: 'npx whisper-node download'",
-		);
-		process.exit(0);
+	switch (answer) {
+		case "cancel":
+			console.log(
+				"Exiting model downloader. Run again with: 'npx whisper-node download'",
+			);
+			process.exit(0);
+		case "":
+			// User just pressed enter
+			console.log("Going with", defaultModel);
+			return defaultModel;
+		default:
+			if (!modelList.includes(answer as ModelName)) {
+				console.log();
+				console.log(
+					"FAIL: Name not found. Check your spelling OR quit wizard and use custom model.",
+				);
+				return await askModel();
+			}
+			return answer;
 	}
-	// user presses enter
-	else if (answer === "") {
-		console.log("Going with", defaultModel);
-		return defaultModel;
-	} else if (!modelList.includes(answer as ModelName)) {
-		console.log(
-			"\nFAIL: Name not found. Check your spelling OR quit wizard and use custom model.",
-		);
-
-		// re-ask question
-		return await askModel();
-	}
-
-	return answer;
 };
 
 export default async function downloadModel() {
