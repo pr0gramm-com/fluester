@@ -1,7 +1,5 @@
-# whisper-node
-
-[![npm downloads](https://img.shields.io/npm/dm/whisper-node)](https://npmjs.org/package/whisper-node)
-[![npm downloads](https://img.shields.io/npm/l/whisper-node)](https://npmjs.org/package/whisper-node)  
+# fluester
+> Hard-fork of [whisper-node](https://github.com/ariym/whisper-node)
 
 Node.js bindings for OpenAI's Whisper.
 
@@ -27,7 +25,7 @@ npx whisper-node download
 
 ## Usage
 
-```javascript
+```js
 import whisper from 'whisper-node';
 
 const transcript = await whisper("example/sample.wav");
@@ -37,7 +35,7 @@ console.log(transcript); // output: [ {start,end,speech} ]
 
 ### Output (JSON)
 
-```javascript
+```js
 [
   {
     "start":  "00:00:14.310", // time stamp begin
@@ -49,7 +47,7 @@ console.log(transcript); // output: [ {start,end,speech} ]
 
 ### Usage with Additional Options
 
-```javascript
+```js
 import whisper from 'whisper-node';
 
 const filePath = "example/sample.wav", // required
