@@ -14,14 +14,14 @@ export default function parseTranscript(vtt: string): ITranscriptLine[] {
 	// 3. convert each line into an object
 	return lines.map((line) => {
 		// 3a. split ts from speech
-		let [timestamp, speech] = line.split("]  ");
+		const [timestamp, speech] = line.split("]  ");
 
 		// 3b. split timestamp into begin and end
 		const [start, end] = timestamp.split(" --> ");
 
 		// 3c. remove \n from speech with regex
-		speech = speech.replace(/\n/g, "");
+		const normalizedSpeech = speech.replace(/\n/g, "");
 
-		return { start, end, speech };
+		return { start, end, speech: normalizedSpeech };
 	});
 }

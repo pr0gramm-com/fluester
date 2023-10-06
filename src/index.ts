@@ -12,7 +12,6 @@ interface IOptions {
 	shellOptions?: IShellOptions;
 }
 
-// returns array[]: {start, end, speech}
 export async function whisper(
 	filePath: string,
 	options?: IOptions,
