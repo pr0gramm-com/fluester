@@ -1,9 +1,10 @@
 {
   "name": "@pr0gramm/fluester",
-  "version": "0.2.12",
+  "version": "0.3.0",
+  "private": true,
   "description": "Node bindings for OpenAI's Whisper. Optimized for CPU.",
   "homepage": "https://github.com/pr0gramm-com/fluester",
-  "author": "ariym",
+  "author": "pr0gramm.com developers",
   "main": "dist/index.js",
   "bin": {
     "download": "dist/download.js"
