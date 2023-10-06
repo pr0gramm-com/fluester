@@ -10,22 +10,23 @@ export function createCppCommand({
 	modelPath = null,
 	options = { word_timestamps: true },
 }: CppCommandTypes) {
-	return `./main ${getFlags(options)} -m ${modelPathOrName(
-		modelName,
-		modelPath,
-	)} -f ${filePath}`;
+	const model = modelPathOrName(modelName, modelPath);
+	return `./main ${getFlags(options)} -m ${model} -f ${filePath}`;
 }
 
 function modelPathOrName(mn: string, mp: string) {
-	if (mn && mp) throw "Submit a modelName OR a modelPath. NOT BOTH!";
-	else if (!mn && !mp) {
+	if (mn && mp) {
+		throw new Error("Submit a modelName OR a modelPath. NOT BOTH!");
+	}
+
+	if (!mn && !mp) {
 		console.log(
 			"No 'modelName' or 'modelPath' provided. Trying default model:",
 			defaultModel,
 			"\n",
 		);
 
-		// second modelname check to verify is installed in directory
+		// second model name check to verify is installed in directory
 		const modelPath = `./models/${modelFileNames[defaultModel]}`;
 
 		if (!existsSync(modelPath)) {
@@ -35,10 +36,14 @@ function modelPathOrName(mn: string, mp: string) {
 
 		return modelPath;
 	}
-	// modelpath
-	else if (mp) return mp;
-	// modelname
-	else if (modelFileNames[mn]) {
+
+	// model path
+	if (mp) {
+		return mp;
+	}
+
+	// model name
+	if (modelFileNames[mn]) {
 		// second modelname check to verify is installed in directory
 		const modelPath = `./models/${modelFileNames[mn]}`;
 
@@ -47,25 +52,43 @@ function modelPathOrName(mn: string, mp: string) {
 		}
 
 		return modelPath;
-	} else if (mn)
-		throw `modelName "${mn}" not found in list of models. Check your spelling OR use a custom modelPath.`;
-	else
-		throw `modelName OR modelPath required! You submitted modelName: '${mn}', modelPath: '${mp}'`;
+	}
+
+	if (mn) {
+		throw new Error(
+			`modelName "${mn}" not found in list of models. Check your spelling OR use a custom modelPath.`,
+		);
+	}
+
+	throw new Error(
+		`modelName OR modelPath required! You submitted modelName: '${mn}', modelPath: '${mp}'`,
+	);
 }
 
 // option flags list: https://github.com/ggerganov/whisper.cpp/blob/master/README.md?plain=1#L91
 function getFlags(flags: IFlagTypes): string {
-	let s = "";
+	const s = [];
 
 	// output files
-	if (flags["gen_file_txt"]) s += " -otxt";
-	if (flags["gen_file_subtitle"]) s += " -osrt";
-	if (flags["gen_file_vtt"]) s += " -ovtt";
-	// timestamps
-	if (flags["timestamp_size"]) s += " -ml " + flags["timestamp-size"];
-	if (flags["word_timestamps"]) s += " -ml 1";
+	if (flags["gen_file_txt"]) {
+		s.push("-otxt");
+	}
+	if (flags["gen_file_subtitle"]) {
+		s.push("-osrt");
+	}
+	if (flags["gen_file_vtt"]) {
+		s.push("-ovtt");
+	}
 
-	return s;
+	// timestamps
+	if (flags["timestamp_size"]) {
+		s.push("-ml " + flags["timestamp_size"]);
+	}
+	if (flags["word_timestamps"]) {
+		s.push("-ml 1");
+	}
+
+	return s.join(" ");
 }
 
 type CppCommandTypes = {

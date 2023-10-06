@@ -19,7 +19,7 @@ export async function whisper(
 	console.log("Transcribing:", filePath, "\n");
 
 	try {
-		// todo: combine steps 1 & 2 into sepparate function called whisperCpp (createCppCommand + shell)
+		// todo: combine steps 1 & 2 into separate function called whisperCpp (createCppCommand + shell)
 
 		// 1. create command string for whisper.cpp
 		const command = createCppCommand({
