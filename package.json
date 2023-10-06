@@ -10,19 +10,18 @@
     "download": "dist/download.js"
   },
   "scripts": {
+    "start": "bun --watch src/index.ts",
     "build": "tsc",
     "ci": "biome ci src",
     "format": "biome format --write src",
     "lint": "biome lint src",
     "lint:apply": "biome lint --apply src",
-    "dev": "NODE_ENV='development' nodemon --watch './**/*.ts' --exec 'ts-node' src/test.ts",
     "test": "node dist/test.js"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.2.2",
     "@types/node": "^20.8.2",
-    "nodemon": "^3.0.1",
-    "ts-node": "^10.9.1",
+    "bun": "^1.0.4",
     "typescript": "^5.2.2"
   },
   "dependencies": {
