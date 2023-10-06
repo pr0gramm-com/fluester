@@ -1,0 +1,18 @@
+{
+	"explorer.fileNesting.enabled": true,
+	"explorer.fileNesting.patterns": {
+		"package.json": "package-lock.json, .npmrc",
+		"tsconfig.json": "tsconfig.*.json",
+		"*.ts": "$(capture).test.ts"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"cSpell.language": "de,en",
+	"cSpell.words": [
+		"fluester"
+	]
+}
