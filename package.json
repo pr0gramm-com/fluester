@@ -19,7 +19,6 @@
     "test": "node dist/test.js"
   },
   "dependencies": {
-    "readline-sync": "^1.4.10",
     "shelljs": "^0.8.5"
   },
   "devDependencies": {

@@ -6,7 +6,7 @@
 
 import shell from "shelljs";
 
-import readlineSync from "readline-sync";
+import { createInterface } from "node:readline/promises";
 
 import { DEFAULT_MODEL, NODE_MODULES_MODELS_PATH } from "./constants";
 
@@ -24,23 +24,25 @@ const MODELS_LIST = [
 ];
 
 const askModel = async () => {
-	const answer = await readlineSync.question(
-		`\n[whisper-node] Enter model name (e.g. 'base.en') or 'cancel' to exit\n(ENTER for base.en): `,
+	const rl = createInterface({ input: process.stdin, output: process.stdout });
+
+	const answer = await rl.question(
+		`\nEnter model name (e.g. 'base.en') or 'cancel' to exit\n(ENTER for base.en): `,
 	);
 
 	if (answer === "cancel") {
 		console.log(
-			"[whisper-node] Exiting model downloader. Run again with: 'npx whisper-node download'",
+			"Exiting model downloader. Run again with: 'npx whisper-node download'",
 		);
 		process.exit(0);
 	}
 	// user presses enter
 	else if (answer === "") {
-		console.log("[whisper-node] Going with", DEFAULT_MODEL);
+		console.log("Going with", DEFAULT_MODEL);
 		return DEFAULT_MODEL;
 	} else if (!MODELS_LIST.includes(answer)) {
 		console.log(
-			"\n[whisper-node] FAIL: Name not found. Check your spelling OR quit wizard and use custom model.",
+			"\nFAIL: Name not found. Check your spelling OR quit wizard and use custom model.",
 		);
 
 		// re-ask question
