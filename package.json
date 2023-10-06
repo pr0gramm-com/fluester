@@ -18,15 +18,15 @@
     "lint:apply": "biome lint --apply src",
     "test": "node dist/test.js"
   },
+  "dependencies": {
+    "readline-sync": "^1.4.10",
+    "shelljs": "^0.8.5"
+  },
   "devDependencies": {
     "@biomejs/biome": "^1.2.2",
     "@types/node": "^20.8.2",
     "bun": "^1.0.4",
     "typescript": "^5.2.2"
-  },
-  "dependencies": {
-    "readline-sync": "^1.4.10",
-    "shelljs": "^0.8.5"
   },
   "repository": {
     "type": "git",
