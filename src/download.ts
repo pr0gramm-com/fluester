@@ -38,14 +38,15 @@ const askModel = async () => {
 			);
 			process.exit(0);
 		default:
-			if (!modelList.includes(answer as ModelName)) {
-				console.log();
-				console.log(
-					"FAIL: Name not found. Check your spelling OR quit wizard and use custom model.",
-				);
-				return await askModel();
+			if (modelList.includes(answer as ModelName)) {
+				return answer;
 			}
-			return answer;
+
+			console.log();
+			console.log(
+				"FAIL: Name not found. Check your spelling OR quit wizard and use custom model.",
+			);
+			return await askModel();
 	}
 };
 
@@ -58,7 +59,9 @@ export default async function downloadModel() {
 
 		// ensure running in correct path
 		if (!shell.which("./download-ggml-model.sh")) {
-			throw "whisper-node downloader is not being run from the correct path! cd to project root and run again.";
+			throw new Error(
+				"whisper-node downloader is not being run from the correct path! cd to project root and run again.",
+			);
 		}
 
 		const modelName = await askModel();
