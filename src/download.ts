@@ -57,20 +57,50 @@ export default async function downloadModel() {
 		// shell.exec("echo $PWD");
 		shell.cd(NODE_MODULES_MODELS_PATH);
 
-		console.log(`
-| Model     | Disk   | RAM     |
-|-----------|--------|---------|
-| tiny      |  75 MB | ~390 MB |
-| tiny.en   |  75 MB | ~390 MB |
-| base      | 142 MB | ~500 MB |
-| base.en   | 142 MB | ~500 MB |
-| small     | 466 MB | ~1.0 GB |
-| small.en  | 466 MB | ~1.0 GB |
-| medium    | 1.5 GB | ~2.6 GB |
-| medium.en | 1.5 GB | ~2.6 GB |
-| large-v1  | 2.9 GB | ~4.7 GB |
-| large     | 2.9 GB | ~4.7 GB |
-`);
+		const models = {
+			tiny: {
+				disk: "75 MB",
+				ram: "~390 MB",
+			},
+			"tiny.en": {
+				disk: "75 MB",
+				ram: "~390 MB",
+			},
+			base: {
+				disk: "142 MB",
+				ram: "~500 MB",
+			},
+			"base.en": {
+				disk: "142 MB",
+				ram: "~500 MB",
+			},
+			small: {
+				disk: "466 MB",
+				ram: "~1.0 GB",
+			},
+			"small.en": {
+				disk: "466 MB",
+				ram: "~1.0 GB",
+			},
+			medium: {
+				disk: "1.5 GB",
+				ram: "~2.6 GB",
+			},
+			"medium.en": {
+				disk: "1.5 GB",
+				ram: "~2.6 GB",
+			},
+			"large-v1": {
+				disk: "2.9 GB",
+				ram: "~4.7 GB",
+			},
+			large: {
+				disk: "2.9 GB",
+				ram: "~4.7 GB",
+			},
+		};
+
+		console.table(models);
 
 		// ensure running in correct path
 		if (!shell.which("./download-ggml-model.sh")) {
