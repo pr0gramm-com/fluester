@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 
 // Javascript layer for using the whisper.cpp built-in model downloader scripts
 // npx @pr0gramm/fluester download
