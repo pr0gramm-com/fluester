@@ -10,12 +10,16 @@
     "download": "dist/download.js"
   },
   "scripts": {
-    "start": "echo Starting with: npm run dev... && npm run dev",
+    "build": "tsc",
+    "ci": "biome ci src",
+    "format": "biome format --write src",
+    "lint": "biome lint src",
+    "lint:apply": "biome lint --apply src",
     "dev": "NODE_ENV='development' nodemon --watch './**/*.ts' --exec 'ts-node' src/test.ts",
-    "build": "npx tsc && chmod +x dist/download.js",
     "test": "node dist/test.js"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.2.2",
     "@types/node": "^20.8.2",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
