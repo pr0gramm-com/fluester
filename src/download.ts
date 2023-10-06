@@ -16,22 +16,27 @@ import {
 } from "./model.js";
 
 const askModel = async () => {
+	const envModel = process.env.WHISPER_MODEL;
+	if (!!envModel && modelList.includes(envModel as ModelName)) {
+		return envModel;
+	}
+
 	const rl = createInterface({ input: process.stdin, output: process.stdout });
 
 	const answer = await rl.question(
-		`\nEnter model name (e.g. 'base.en') or 'cancel' to exit\n(ENTER for base.en): `,
+		`\nEnter model name (e.g. 'base.en') or 'cancel' to exit\n(ENTER for ${defaultModel}): `,
 	);
 
 	switch (answer) {
+		case "":
+			// User just pressed enter
+			console.log("Going with ", defaultModel);
+			return defaultModel;
 		case "cancel":
 			console.log(
 				"Exiting model downloader. Run again with: 'npx whisper-node download'",
 			);
 			process.exit(0);
-		case "":
-			// User just pressed enter
-			console.log("Going with", defaultModel);
-			return defaultModel;
 		default:
 			if (!modelList.includes(answer as ModelName)) {
 				console.log();
