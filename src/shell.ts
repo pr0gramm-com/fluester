@@ -21,7 +21,7 @@ const defaultShellOptions = {
 export default async function whisperShell(
 	command: string,
 	options: IShellOptions = defaultShellOptions,
-): Promise<any> {
+): Promise<string> {
 	return new Promise((resolve, reject) => {
 		try {
 			// docs: https://github.com/shelljs/shelljs#execcommand--options--callback

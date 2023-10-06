@@ -1,7 +1,7 @@
 // todo: remove all imports from file
 import { existsSync } from "node:fs";
 
-import { defaultModel, modelFileNames, ModelName } from "./model.js";
+import { ModelName, defaultModel, modelFileNames } from "./model.js";
 
 // return as syntax for whisper.cpp command
 export function createCppCommand({
@@ -30,8 +30,7 @@ function modelPathOrName(mn: string, mp: string) {
 		const modelPath = `./models/${modelFileNames[defaultModel]}`;
 
 		if (!existsSync(modelPath)) {
-			// throw `'${mn}' not downloaded! Run 'npx whisper-node download'`;
-			throw `'${defaultModel}' not downloaded! Run 'npx whisper-node download'\n`;
+			throw `'${defaultModel}' not downloaded! Run 'npx @pr0gramm/fluester download'\n`;
 		}
 
 		return modelPath;
@@ -44,11 +43,11 @@ function modelPathOrName(mn: string, mp: string) {
 
 	// model name
 	if (modelFileNames[mn]) {
-		// second modelname check to verify is installed in directory
+		// second model name check to verify is installed in directory
 		const modelPath = `./models/${modelFileNames[mn]}`;
 
 		if (!existsSync(modelPath)) {
-			throw `'${mn}' not found! Run 'npx whisper-node download'`;
+			throw `"${mn}" not found! Run "npx @pr0gramm/fluester download"`;
 		}
 
 		return modelPath;
@@ -61,7 +60,7 @@ function modelPathOrName(mn: string, mp: string) {
 	}
 
 	throw new Error(
-		`modelName OR modelPath required! You submitted modelName: '${mn}', modelPath: '${mp}'`,
+		`modelName OR modelPath required! You submitted modelName: "${mn}", modelPath: "${mp}"`,
 	);
 }
 
@@ -70,21 +69,21 @@ function getFlags(flags: IFlagTypes): string {
 	const s = [];
 
 	// output files
-	if (flags["gen_file_txt"]) {
+	if (flags.gen_file_txt) {
 		s.push("-otxt");
 	}
-	if (flags["gen_file_subtitle"]) {
+	if (flags.gen_file_subtitle) {
 		s.push("-osrt");
 	}
-	if (flags["gen_file_vtt"]) {
+	if (flags.gen_file_vtt) {
 		s.push("-ovtt");
 	}
 
 	// timestamps
-	if (flags["timestamp_size"]) {
-		s.push("-ml " + flags["timestamp_size"]);
+	if (flags.timestamp_size) {
+		s.push(`-ml ${flags.timestamp_size}`);
 	}
-	if (flags["word_timestamps"]) {
+	if (flags.word_timestamps) {
 		s.push("-ml 1");
 	}
 

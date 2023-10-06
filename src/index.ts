@@ -1,9 +1,9 @@
 import path from "node:path";
 
-import shell, { IShellOptions } from "./shell.js";
-import { createCppCommand, IFlagTypes } from "./whisper.js";
-import transcriptToArray, { ITranscriptLine } from "./tsToArray.js";
 import type { ModelName } from "./model.js";
+import shell, { IShellOptions } from "./shell.js";
+import transcriptToArray, { ITranscriptLine } from "./tsToArray.js";
+import { IFlagTypes, createCppCommand } from "./whisper.js";
 
 interface IOptions {
 	modelName?: string; // name of model stored in node_modules/whisper-node/lib/whisper.cpp/models

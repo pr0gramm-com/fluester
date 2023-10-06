@@ -9,9 +9,9 @@ import shell from "shelljs";
 
 import {
 	ModelName,
+	defaultModel,
 	modelList,
 	modelStats,
-	defaultModel,
 	nodeModulesModelPath,
 } from "./model.js";
 
