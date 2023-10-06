@@ -1,5 +1,24 @@
+export const defaultModel = "base.en";
+export const nodeModulesModelPath =
+	"node_modules/whisper-node/lib/whisper.cpp/models";
+
 // model list: https://github.com/ggerganov/whisper.cpp/#more-audio-samples
-export const modelList = Object.freeze({
+export const modelList = [
+	"tiny",
+	"tiny.en",
+	"base",
+	"base.en",
+	"small",
+	"small.en",
+	"medium",
+	"medium.en",
+	"large-v1",
+	"large",
+] as const;
+
+export type ModelName = typeof modelList[number];
+
+export const modelFileNames: Record<ModelName, string> = {
 	tiny: "ggml-tiny.bin",
 	"tiny.en": "ggml-tiny.en.bin",
 	base: "ggml-base.bin",
@@ -10,11 +29,9 @@ export const modelList = Object.freeze({
 	"medium.en": "ggml-medium.en.bin",
 	"large-v1": "ggml-large-v1.bin",
 	large: "ggml-large.bin",
-});
+};
 
-export type ModelName = keyof typeof modelList;
-
-export const modelStats = Object.freeze({
+export const modelStats: Record<ModelName, { disk: string; ram: string }> = {
 	tiny: {
 		disk: "75 MB",
 		ram: "~390 MB",
@@ -55,4 +72,4 @@ export const modelStats = Object.freeze({
 		disk: "2.9 GB",
 		ram: "~4.7 GB",
 	},
-});
+};

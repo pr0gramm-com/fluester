@@ -1,36 +1,36 @@
 // todo: remove all imports from file
 import { existsSync } from "node:fs";
 
-import { DEFAULT_MODEL } from "./constants.js";
-import { modelList, ModelName } from "./model.js";
+import { defaultModel, modelFileNames, ModelName } from "./model.js";
 
 // return as syntax for whisper.cpp command
-export const createCppCommand = ({
+export function createCppCommand({
 	filePath,
 	modelName = null,
 	modelPath = null,
 	options = { word_timestamps: true },
-}: CppCommandTypes) =>
-	`./main ${getFlags(options)} -m ${modelPathOrName(
+}: CppCommandTypes) {
+	return `./main ${getFlags(options)} -m ${modelPathOrName(
 		modelName,
 		modelPath,
 	)} -f ${filePath}`;
+}
 
-const modelPathOrName = (mn: string, mp: string) => {
+function modelPathOrName(mn: string, mp: string) {
 	if (mn && mp) throw "Submit a modelName OR a modelPath. NOT BOTH!";
 	else if (!mn && !mp) {
 		console.log(
 			"No 'modelName' or 'modelPath' provided. Trying default model:",
-			DEFAULT_MODEL,
+			defaultModel,
 			"\n",
 		);
 
 		// second modelname check to verify is installed in directory
-		const modelPath = `./models/${modelList[DEFAULT_MODEL]}`;
+		const modelPath = `./models/${modelFileNames[defaultModel]}`;
 
 		if (!existsSync(modelPath)) {
 			// throw `'${mn}' not downloaded! Run 'npx whisper-node download'`;
-			throw `'${DEFAULT_MODEL}' not downloaded! Run 'npx whisper-node download'\n`;
+			throw `'${defaultModel}' not downloaded! Run 'npx whisper-node download'\n`;
 		}
 
 		return modelPath;
@@ -38,9 +38,9 @@ const modelPathOrName = (mn: string, mp: string) => {
 	// modelpath
 	else if (mp) return mp;
 	// modelname
-	else if (modelList[mn]) {
+	else if (modelFileNames[mn]) {
 		// second modelname check to verify is installed in directory
-		const modelPath = `./models/${modelList[mn]}`;
+		const modelPath = `./models/${modelFileNames[mn]}`;
 
 		if (!existsSync(modelPath)) {
 			throw `'${mn}' not found! Run 'npx whisper-node download'`;
@@ -51,10 +51,10 @@ const modelPathOrName = (mn: string, mp: string) => {
 		throw `modelName "${mn}" not found in list of models. Check your spelling OR use a custom modelPath.`;
 	else
 		throw `modelName OR modelPath required! You submitted modelName: '${mn}', modelPath: '${mp}'`;
-};
+}
 
 // option flags list: https://github.com/ggerganov/whisper.cpp/blob/master/README.md?plain=1#L91
-const getFlags = (flags: IFlagTypes): string => {
+function getFlags(flags: IFlagTypes): string {
 	let s = "";
 
 	// output files
@@ -66,7 +66,7 @@ const getFlags = (flags: IFlagTypes): string => {
 	if (flags["word_timestamps"]) s += " -ml 1";
 
 	return s;
-};
+}
 
 type CppCommandTypes = {
 	filePath: string;

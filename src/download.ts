@@ -1,28 +1,19 @@
 #! /usr/bin/env node
 
 // Javascript layer for using the whisper.cpp built-in model downloader scripts
-//
-// npx whisper-node download
-
-import shell from "shelljs";
+// npx @pr0gramm/fluester download
 
 import { createInterface } from "node:readline/promises";
 
-import { modelStats } from "./model.js";
-import { DEFAULT_MODEL, NODE_MODULES_MODELS_PATH } from "./constants.js";
+import shell from "shelljs";
 
-const MODELS_LIST = [
-	"tiny",
-	"tiny.en",
-	"base",
-	"base.en",
-	"small",
-	"small.en",
-	"medium",
-	"medium.en",
-	"large-v1",
-	"large",
-];
+import {
+	ModelName,
+	modelList,
+	modelStats,
+	defaultModel,
+	nodeModulesModelPath,
+} from "./model.js";
 
 const askModel = async () => {
 	const rl = createInterface({ input: process.stdin, output: process.stdout });
@@ -39,9 +30,9 @@ const askModel = async () => {
 	}
 	// user presses enter
 	else if (answer === "") {
-		console.log("Going with", DEFAULT_MODEL);
-		return DEFAULT_MODEL;
-	} else if (!MODELS_LIST.includes(answer)) {
+		console.log("Going with", defaultModel);
+		return defaultModel;
+	} else if (!modelList.includes(answer as ModelName)) {
 		console.log(
 			"\nFAIL: Name not found. Check your spelling OR quit wizard and use custom model.",
 		);
@@ -56,7 +47,7 @@ const askModel = async () => {
 export default async function downloadModel() {
 	try {
 		// shell.exec("echo $PWD");
-		shell.cd(NODE_MODULES_MODELS_PATH);
+		shell.cd(nodeModulesModelPath);
 
 		console.table(modelStats);
 

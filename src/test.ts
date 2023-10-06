@@ -1,4 +1,5 @@
-import { whisper } from "./index";
+import { whisper } from "./index.js";
+
 (async function run() {
 	try {
 		const transcript = await whisper("/Users/Shared/twospeak_clip.wav", {
