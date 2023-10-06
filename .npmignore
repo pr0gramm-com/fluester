@@ -1,0 +1,9 @@
+.github/
+.vscode/
+examples/
+scripts/
+src/
+biome.json
+.editorconfig
+*.tgz
+tsconfig.json
