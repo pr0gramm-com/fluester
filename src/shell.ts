@@ -1,10 +1,13 @@
 import path from "node:path";
+import url from "node:url";
 
 import shell from "shelljs";
 
-// docs: https://github.com/ggerganov/whisper.cpp
-const WHISPER_CPP_PATH = path.join(__dirname, "..", "lib/whisper.cpp");
-const WHISPER_CPP_MAIN_PATH = "./main";
+const dirName = url.fileURLToPath(new URL(".", import.meta.url));
+
+// Docs: https://github.com/ggerganov/whisper.cpp
+const whisperCppPath = path.join(dirName, "..", "lib/whisper.cpp");
+const whisperCppMain = "./main";
 
 export interface IShellOptions {
 	silent: boolean; // true: won't print to console
@@ -17,21 +20,15 @@ const defaultShellOptions = {
 	async: false,
 };
 
-// return shelljs process
 export default async function whisperShell(
 	command: string,
 	options: IShellOptions = defaultShellOptions,
 ): Promise<string> {
 	return new Promise((resolve, reject) => {
 		try {
-			// docs: https://github.com/shelljs/shelljs#execcommand--options--callback
-			shell.exec(
-				command,
-				options,
-				(code: number, stdout: string, stderr: string) => {
-					if (code === 0) resolve(stdout);
-					else reject(stderr);
-				},
+			// Docs: https://github.com/shelljs/shelljs#execcommand--options--callback
+			shell.exec(command, options, (code, stdout, stderr) =>
+				code === 0 ? resolve(stdout) : reject(stderr),
 			);
 		} catch (error) {
 			reject(error);
@@ -40,31 +37,29 @@ export default async function whisperShell(
 }
 
 try {
-	// shell.cd(__dirname + WHISPER_CPP_PATH);
-	shell.cd(WHISPER_CPP_PATH);
+	// shell.cd(dirName + WHISPER_CPP_PATH);
+	shell.cd(whisperCppPath);
 
 	// ensure command exists in local path
-	if (!shell.which(WHISPER_CPP_MAIN_PATH)) {
-		shell.echo(
-			"problem. whisper.cpp not initialized. Current shelljs directory: ",
-			__dirname,
+	if (!shell.which(whisperCppMain)) {
+		console.error(
+			`whisper.cpp not initialized. Current shelljs directory: ${dirName}`,
 		);
-		shell.echo("attempting to run 'make' command in /whisper directory...");
+		console.error(`attempting to run "make" command in /whisper directory...`);
 
 		// todo: move this
 		shell.exec("make", defaultShellOptions);
 
-		if (!shell.which(WHISPER_CPP_MAIN_PATH)) {
-			console.log(
-				"problem. 'make' command failed. Please run 'make' command in /whisper directory. Current shelljs directory: ",
-				__dirname,
+		if (!shell.which(whisperCppMain)) {
+			console.error(
+				`"make" command failed. Please run "make" command in /whisper directory. Current shelljs directory: ${dirName}`,
 			);
-			process.exit(1);
-		} else
-			console.log(
-				"'make' command successful. Current shelljs directory: ",
-				__dirname,
-			);
+			process.exit(-1);
+		}
+
+		console.log(
+			`"make" command successful. Current shelljs directory: ${dirName}`,
+		);
 	}
 } catch (error) {
 	console.log("error caught in try catch block");
