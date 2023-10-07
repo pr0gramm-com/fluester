@@ -3,15 +3,16 @@ import { existsSync } from "node:fs";
 
 import { ModelName, modelFileNames } from "./model.js";
 
-// return as syntax for whisper.cpp command
-export function createCppCommand({
+export type AppCommand = [command: string, args: readonly string[]];
+
+export function buildExecCommand({
 	filePath,
 	modelName = undefined,
 	modelPath = undefined,
 	options = { wordTimestamps: true },
-}: CppCommandTypes) {
+}: CppCommandTypes): AppCommand {
 	const model = modelPathOrName(modelName, modelPath);
-	return `./main ${getFlags(options)} -m ${model} -f ${filePath}`;
+	return ["./main", [...getFlags(options), "-m", model, "-f", filePath]];
 }
 
 function modelPathOrName(

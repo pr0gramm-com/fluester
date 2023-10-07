@@ -14,6 +14,7 @@ import {
 	modelStats,
 	nodeModulesModelPath,
 } from "./model.js";
+import { runCommand } from "./child.js";
 
 async function askModel() {
 	const envModel = process.env.WHISPER_MODEL;
@@ -71,8 +72,9 @@ export default async function downloadModel() {
 
 		// move up directory, run make in whisper.cpp
 		process.chdir("../");
+
 		// this has to run in whichever directory the model is located in??
-		shell.exec("make");
+		await runCommand("make");
 
 		process.exit(0);
 	} catch (error) {

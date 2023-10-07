@@ -3,34 +3,13 @@ import url from "node:url";
 
 import shell from "shelljs";
 
+import { runCommand } from "./child.js";
+
 const dirName = url.fileURLToPath(new URL(".", import.meta.url));
 
 // Docs: https://github.com/ggerganov/whisper.cpp
 const whisperCppPath = path.join(dirName, "..", "lib/whisper.cpp");
 const whisperCppMain = "./main";
-
-export interface IShellOptions {
-	silent: boolean; // true: won't print to console
-	async: boolean;
-}
-
-// default passed to shelljs exec
-const defaultShellOptions = {
-	silent: true, // true: won't print to console
-	async: false,
-};
-
-export default async function whisperShell(
-	command: string,
-	options: IShellOptions = defaultShellOptions,
-): Promise<string> {
-	return new Promise((resolve, reject) => {
-		// Docs: https://github.com/shelljs/shelljs#execcommand--options--callback
-		shell.exec(command, options, (code, stdout, stderr) =>
-			code === 0 ? resolve(stdout) : reject(stderr),
-		);
-	});
-}
 
 try {
 	// process.chdir(dirName + WHISPER_CPP_PATH);
@@ -42,7 +21,7 @@ try {
 		console.error(`attempting to run "make" command in /whisper directory...`);
 
 		// TODO: move this?
-		shell.exec("make", defaultShellOptions);
+		await runCommand("make");
 
 		if (!shell.which(whisperCppMain)) {
 			console.error(
