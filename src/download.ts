@@ -24,30 +24,24 @@ const askModel = async () => {
 	const rl = createInterface({ input: process.stdin, output: process.stdout });
 
 	const answer = await rl.question(
-		`\nEnter model name (e.g. 'base.en') or 'cancel' to exit\n(ENTER for ${defaultModel}): `,
+		`\nEnter model name (e.g. 'base.en') or "cancel" to exit\n(default: "${defaultModel}"): `,
 	);
+	const answerNormalized = answer.trim().toLowerCase();
 
-	switch (answer) {
-		case "":
-			// User just pressed enter
-			console.log("Going with ", defaultModel);
-			return defaultModel;
-		case "cancel":
-			console.log(
-				"Exiting model downloader. Run again with: 'npx whisper-node download'",
-			);
-			process.exit(0);
-		default:
-			if (modelList.includes(answer as ModelName)) {
-				return answer;
-			}
-
-			console.log();
-			console.log(
-				"FAIL: Name not found. Check your spelling OR quit wizard and use custom model.",
-			);
-			return await askModel();
+	if (answerNormalized === "") {
+		return defaultModel;
 	}
+	if (answerNormalized === "cancel") {
+		process.exit(0);
+	}
+
+	if (modelList.includes(answer as ModelName)) {
+		return answer;
+	}
+
+	console.error(`Invalid model name: ${answer}`);
+	console.log(`Valid model names are: ${modelList.join(", ")}`);
+	process.exit(0);
 };
 
 export default async function downloadModel() {
