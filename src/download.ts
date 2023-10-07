@@ -60,12 +60,11 @@ export default async function downloadModel() {
 
 		const modelName = await askModel();
 
-		// default is .sh
-		let scriptPath = "./download-ggml-model.sh";
-		// windows .cmd version
-		if (process.platform === "win32") scriptPath = "download-ggml-model.cmd";
+		const scriptPath =
+			process.platform === "win32"
+				? "download-ggml-model.cmd"
+				: "./download-ggml-model.sh";
 
-		// todo: check if windows or unix to run bat command or .sh command
 		shell.exec(`${scriptPath} ${modelName}`);
 
 		console.log("Attempting to compile model...");
@@ -77,9 +76,9 @@ export default async function downloadModel() {
 
 		process.exit(0);
 	} catch (error) {
-		console.log("ERROR Caught in downloadModel");
+		console.log("Error while downloading model:");
 		console.log(error);
-		return error;
+		throw error;
 	}
 }
 
