@@ -64,4 +64,5 @@ const transcript = await whisper(filePath, options);
 - [ShellJS](https://www.npmjs.com/package/shelljs)
 
 ## Roadmap
-None ¯\_(ツ)_/¯
+- Drop ShellJS, use native/builtin stuff
+- Nothing ¯\\_(ツ)_/¯
