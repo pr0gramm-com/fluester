@@ -15,7 +15,7 @@ import {
 	nodeModulesModelPath,
 } from "./model.js";
 
-const askModel = async () => {
+async function askModel() {
 	const envModel = process.env.WHISPER_MODEL;
 	if (!!envModel && modelList.includes(envModel as ModelName)) {
 		return envModel;
@@ -32,7 +32,7 @@ const askModel = async () => {
 		return defaultModel;
 	}
 	if (answerNormalized === "cancel") {
-		process.exit(0);
+		process.exit(-1);
 	}
 
 	if (modelList.includes(answer as ModelName)) {
@@ -41,8 +41,8 @@ const askModel = async () => {
 
 	console.error(`Invalid model name: ${answer}`);
 	console.log(`Valid model names are: ${modelList.join(", ")}`);
-	process.exit(0);
-};
+	process.exit(-1);
+}
 
 export default async function downloadModel() {
 	try {
