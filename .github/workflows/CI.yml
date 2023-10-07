@@ -15,6 +15,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true # needed for the whisper.cpp submodule
+
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
