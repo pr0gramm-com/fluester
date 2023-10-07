@@ -42,24 +42,20 @@ try {
 
 	// ensure command exists in local path
 	if (!shell.which(whisperCppMain)) {
-		console.error(
-			`whisper.cpp not initialized. Current shelljs directory: ${dirName}`,
-		);
+		console.error(`whisper.cpp not initialized. Current directory: ${dirName}`);
 		console.error(`attempting to run "make" command in /whisper directory...`);
 
-		// todo: move this
+		// TODO: move this?
 		shell.exec("make", defaultShellOptions);
 
 		if (!shell.which(whisperCppMain)) {
 			console.error(
-				`"make" command failed. Please run "make" command in /whisper directory. Current shelljs directory: ${dirName}`,
+				`"make" command failed. Please run "make" command in /whisper directory. Current directory: ${dirName}`,
 			);
 			process.exit(-1);
 		}
 
-		console.log(
-			`"make" command successful. Current shelljs directory: ${dirName}`,
-		);
+		console.log(`"make" command successful. Current directory: ${dirName}`);
 	}
 } catch (error) {
 	console.log("error caught in try catch block");
