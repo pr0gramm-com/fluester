@@ -24,6 +24,9 @@ async function askModel() {
 
 	const rl = createInterface({ input: process.stdin, output: process.stdout });
 
+	console.log("Which model should be downloaded?");
+	console.log("You can skip this question and pass the model as an env var: WHISPER_MODEL=tiny");
+
 	console.table(modelStats);
 
 	const answer = await rl.question(
