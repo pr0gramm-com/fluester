@@ -1,6 +1,6 @@
 export const defaultModel = "base.en";
 export const nodeModulesModelPath =
-	"node_modules/whisper-node/lib/whisper.cpp/models";
+	"node_modules/@pr0gramm/fluester/lib/whisper.cpp/models";
 
 // model list: https://github.com/ggerganov/whisper.cpp/#more-audio-samples
 export const modelList = [

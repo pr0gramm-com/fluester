@@ -6,7 +6,7 @@ import transcriptToArray, { TranscriptLine } from "./tsToArray.js";
 import { FlagTypes, buildExecCommand } from "./whisper.js";
 
 export interface WhisperOptions {
-	modelName?: string; // name of model stored in node_modules/whisper-node/lib/whisper.cpp/models
+	modelName?: string; // name of model stored in node_modules/@pr0gramm/fluester/lib/whisper.cpp/models
 	modelPath?: string; // custom path for model
 	whisperOptions?: FlagTypes;
 }
