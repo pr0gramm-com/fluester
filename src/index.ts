@@ -2,10 +2,10 @@ import path from "node:path";
 
 import type { ModelName } from "./model.js";
 import shell, { IShellOptions } from "./shell.js";
-import transcriptToArray, { ITranscriptLine } from "./tsToArray.js";
+import transcriptToArray, { TranscriptLine } from "./tsToArray.js";
 import { IFlagTypes, createCppCommand } from "./whisper.js";
 
-interface IOptions {
+export interface WhisperOptions {
 	modelName?: string; // name of model stored in node_modules/whisper-node/lib/whisper.cpp/models
 	modelPath?: string; // custom path for model
 	whisperOptions?: IFlagTypes;
@@ -19,8 +19,8 @@ interface IOptions {
  */
 export async function whisper(
 	filePath: string,
-	options?: IOptions,
-): Promise<ITranscriptLine[]> {
+	options?: WhisperOptions,
+): Promise<TranscriptLine[]> {
 	console.log("Transcribing:", filePath, "\n");
 
 	try {

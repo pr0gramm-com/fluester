@@ -1,10 +1,10 @@
-export type ITranscriptLine = {
+export interface TranscriptLine {
 	start: string;
 	end: string;
 	speech: string;
-};
+}
 
-export default function parseTranscript(vtt: string): ITranscriptLine[] {
+export default function parseTranscript(vtt: string): TranscriptLine[] {
 	// 1. separate lines at timestamp's open bracket
 	const lines: string[] = vtt.split("[");
 

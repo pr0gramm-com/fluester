@@ -1,7 +1,7 @@
 // todo: remove all imports from file
 import { existsSync } from "node:fs";
 
-import { ModelName, defaultModel, modelFileNames } from "./model.js";
+import { ModelName, modelFileNames } from "./model.js";
 
 // return as syntax for whisper.cpp command
 export function createCppCommand({
@@ -68,17 +68,17 @@ function getFlags(flags: IFlagTypes): string {
 	return s.join(" ");
 }
 
-interface CppCommandTypes {
+export interface CppCommandTypes {
 	filePath: string;
 	modelName?: ModelName;
 	modelPath?: string;
 	options?: IFlagTypes;
 }
 
-export type IFlagTypes = {
+export interface IFlagTypes {
 	gen_file_txt?: boolean;
 	gen_file_subtitle?: boolean;
 	gen_file_vtt?: boolean;
 	timestamp_size?: number;
 	word_timestamps?: boolean;
-};
+}
