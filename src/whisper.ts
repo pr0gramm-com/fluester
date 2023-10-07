@@ -8,7 +8,7 @@ export function createCppCommand({
 	filePath,
 	modelName = undefined,
 	modelPath = undefined,
-	options = { word_timestamps: true },
+	options = { wordTimestamps: true },
 }: CppCommandTypes) {
 	const model = modelPathOrName(modelName, modelPath);
 	return `./main ${getFlags(options)} -m ${model} -f ${filePath}`;
@@ -47,21 +47,21 @@ function getFlags(flags: FlagTypes): string {
 	const s = [];
 
 	// output files
-	if (flags.gen_file_txt) {
+	if (flags.generateTxt) {
 		s.push("-otxt");
 	}
-	if (flags.gen_file_subtitle) {
+	if (flags.generateSubtitles) {
 		s.push("-osrt");
 	}
-	if (flags.gen_file_vtt) {
+	if (flags.generateVtt) {
 		s.push("-ovtt");
 	}
 
 	// timestamps
-	if (flags.timestamp_size) {
-		s.push(`-ml ${flags.timestamp_size}`);
+	if (flags.timestampSize) {
+		s.push(`-ml ${flags.timestampSize}`);
 	}
-	if (flags.word_timestamps) {
+	if (flags.wordTimestamps) {
 		s.push("-ml 1");
 	}
 
@@ -76,9 +76,12 @@ export interface CppCommandTypes {
 }
 
 export interface FlagTypes {
-	gen_file_txt?: boolean;
-	gen_file_subtitle?: boolean;
-	gen_file_vtt?: boolean;
-	timestamp_size?: number;
-	word_timestamps?: boolean;
+	/** Build TXT? */
+	generateTxt?: boolean;
+	/** Build SRT? */
+	generateSubtitles?: boolean;
+	/** Build VTT? */
+	generateVtt?: boolean;
+	timestampSize?: number;
+	wordTimestamps?: boolean;
 }

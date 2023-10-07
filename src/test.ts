@@ -5,7 +5,7 @@ import { whisper } from "./index.js";
 		const transcript = await whisper("/Users/Shared/twospeak_clip.wav", {
 			// modelPath: "/Users/Shared/custom-models/ggml-base.en.bin",
 			// modelName: "base.en",
-			whisperOptions: { word_timestamps: true },
+			whisperOptions: { wordTimestamps: true },
 		});
 
 		console.log("transcript", transcript);
