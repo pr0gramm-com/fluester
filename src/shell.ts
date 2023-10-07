@@ -33,8 +33,8 @@ export default async function whisperShell(
 }
 
 try {
-	// shell.cd(dirName + WHISPER_CPP_PATH);
-	shell.cd(whisperCppPath);
+	// process.chdir(dirName + WHISPER_CPP_PATH);
+	process.chdir(whisperCppPath);
 
 	// ensure command exists in local path
 	if (!shell.which(whisperCppMain)) {

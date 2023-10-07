@@ -49,7 +49,7 @@ async function askModel() {
 export default async function downloadModel() {
 	try {
 		// shell.exec("echo $PWD");
-		shell.cd(nodeModulesModelPath);
+		process.chdir(nodeModulesModelPath);
 
 		// ensure running in correct path
 		if (!shell.which("./download-ggml-model.sh")) {
@@ -70,7 +70,7 @@ export default async function downloadModel() {
 		console.log("Attempting to compile model...");
 
 		// move up directory, run make in whisper.cpp
-		shell.cd("../");
+		process.chdir("../");
 		// this has to run in whichever directory the model is located in??
 		shell.exec("make");
 
