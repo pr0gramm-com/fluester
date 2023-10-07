@@ -23,6 +23,8 @@ async function askModel() {
 
 	const rl = createInterface({ input: process.stdin, output: process.stdout });
 
+	console.table(modelStats);
+
 	const answer = await rl.question(
 		`\nEnter model name (e.g. 'base.en') or "cancel" to exit\n(default: "${defaultModel}"): `,
 	);
@@ -49,12 +51,10 @@ export default async function downloadModel() {
 		// shell.exec("echo $PWD");
 		shell.cd(nodeModulesModelPath);
 
-		console.table(modelStats);
-
 		// ensure running in correct path
 		if (!shell.which("./download-ggml-model.sh")) {
 			throw new Error(
-				"whisper-node downloader is not being run from the correct path! cd to project root and run again.",
+				"Downloader is not being run from the correct path! cd to project root and run again.",
 			);
 		}
 
