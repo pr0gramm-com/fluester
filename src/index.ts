@@ -3,12 +3,12 @@ import path from "node:path";
 import type { ModelName } from "./model.js";
 import shell, { IShellOptions } from "./shell.js";
 import transcriptToArray, { TranscriptLine } from "./tsToArray.js";
-import { IFlagTypes, createCppCommand } from "./whisper.js";
+import { FlagTypes, createCppCommand } from "./whisper.js";
 
 export interface WhisperOptions {
 	modelName?: string; // name of model stored in node_modules/whisper-node/lib/whisper.cpp/models
 	modelPath?: string; // custom path for model
-	whisperOptions?: IFlagTypes;
+	whisperOptions?: FlagTypes;
 	shellOptions?: IShellOptions;
 }
 

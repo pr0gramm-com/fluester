@@ -43,7 +43,7 @@ function modelPathOrName(
 }
 
 // option flags list: https://github.com/ggerganov/whisper.cpp/blob/master/README.md?plain=1#L91
-function getFlags(flags: IFlagTypes): string {
+function getFlags(flags: FlagTypes): string {
 	const s = [];
 
 	// output files
@@ -72,10 +72,10 @@ export interface CppCommandTypes {
 	filePath: string;
 	modelName?: ModelName;
 	modelPath?: string;
-	options?: IFlagTypes;
+	options?: FlagTypes;
 }
 
-export interface IFlagTypes {
+export interface FlagTypes {
 	gen_file_txt?: boolean;
 	gen_file_subtitle?: boolean;
 	gen_file_vtt?: boolean;
