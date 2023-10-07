@@ -7,6 +7,7 @@ import { createInterface } from "node:readline/promises";
 
 import shell from "shelljs";
 
+import { runCommand } from "./child.js";
 import {
 	ModelName,
 	defaultModel,
@@ -14,7 +15,6 @@ import {
 	modelStats,
 	nodeModulesModelPath,
 } from "./model.js";
-import { runCommand } from "./child.js";
 
 async function askModel() {
 	const envModel = process.env.WHISPER_MODEL;

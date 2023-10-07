@@ -1,9 +1,9 @@
 import path from "node:path";
 
+import { runCommand } from "./child.js";
 import type { ModelName } from "./model.js";
 import transcriptToArray, { TranscriptLine } from "./tsToArray.js";
 import { FlagTypes, buildExecCommand } from "./whisper.js";
-import { runCommand } from "./child.js";
 
 export interface WhisperOptions {
 	modelName?: string; // name of model stored in node_modules/whisper-node/lib/whisper.cpp/models
