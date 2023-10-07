@@ -25,14 +25,10 @@ export default async function whisperShell(
 	options: IShellOptions = defaultShellOptions,
 ): Promise<string> {
 	return new Promise((resolve, reject) => {
-		try {
-			// Docs: https://github.com/shelljs/shelljs#execcommand--options--callback
-			shell.exec(command, options, (code, stdout, stderr) =>
-				code === 0 ? resolve(stdout) : reject(stderr),
-			);
-		} catch (error) {
-			reject(error);
-		}
+		// Docs: https://github.com/shelljs/shelljs#execcommand--options--callback
+		shell.exec(command, options, (code, stdout, stderr) =>
+			code === 0 ? resolve(stdout) : reject(stderr),
+		);
 	});
 }
 
