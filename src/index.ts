@@ -12,6 +12,11 @@ interface IOptions {
 	shellOptions?: IShellOptions;
 }
 
+/**
+ * @param filePath Path to audio file.
+ * @param options Whisper options.
+ * @throws Some error if execution failed.
+ */
 export async function whisper(
 	filePath: string,
 	options?: IOptions,
@@ -35,8 +40,7 @@ export async function whisper(
 
 		// 3. parse whisper response string into array
 		return transcriptToArray(transcript);
-	} catch (error) {
-		console.error("Problem:");
-		console.error(error);
+	} catch (cause) {
+		throw new Error("Error during whisper operation", { cause });
 	}
 }
