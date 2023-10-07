@@ -1,6 +1,6 @@
 {
   "name": "@pr0gramm/fluester",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "MIT",
   "description": "Node.js bindings for OpenAI's Whisper. Optimized for CPU.",
   "homepage": "https://github.com/pr0gramm-com/fluester",
