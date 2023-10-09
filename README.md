@@ -28,17 +28,20 @@ npx --package @pr0gramm/fluester compile-whisper
 ```
 
 ## Usage
+### Translation
 ```js
 import { createWhisperClient } from "@pr0gramm/fluester";
 
-const client = createWhisperClient();
+const client = createWhisperClient({
+  modelName: "base",
+});
 
 const transcript = await client.translate("example/sample.wav");
 
 console.log(transcript); // output: [ {start,end,speech} ]
 ```
 
-### Output (JSON)
+#### Output (JSON)
 ```js
 [
   {
@@ -49,25 +52,16 @@ console.log(transcript); // output: [ {start,end,speech} ]
 ]
 ```
 
-### Usage with Additional Options
+### Language Detection
 ```js
-import whisper from "@pr0gramm/fluester";
+import { createWhisperClient } from "@pr0gramm/fluester";
 
-const filePath = "example/sample.wav", // required
+const client = createWhisperClient({
+  modelName: "base",
+});
 
-const options = {
-  modelName: "tiny.en", // default
-  modelPath: "/custom/path/to/model.bin", // use model in a custom directory
-  whisperOptions: {
-    generateTxt: false, // outputs .txt file
-    generateSubtitles: false, // outputs .srt file
-    generateVtt: false, // outputs .vtt file
-    timestampSize: 10, // amount of dialogue per timestamp pair
-    wordTimestamps: true // timestamp for every word
-  }
-}
-
-const transcript = await whisper(filePath, options);
+const language = await client.detectLanguage("example/sample.wav");
+console.log(`Detected: ${language ?? "nothing :("}`);
 ```
 
 

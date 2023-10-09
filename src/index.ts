@@ -105,6 +105,7 @@ export function createWhisperClient(
 				filePath,
 			]);
 
+			// TODO: Check for probability threshold
 			return parseDetectedLanguage(result.stderr.toString());
 		},
 	};
