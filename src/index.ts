@@ -53,14 +53,7 @@ export function createWhisperClient(
 		// TODO
 		translate: async (filePath: string, options: WhisperOptions) => {
 			try {
-				const modelPath =
-					"modelPath" in options
-						? options.modelPath
-						: path.join(
-								nodeModulesModelPath,
-								modelFileNames[options.modelName],
-						  );
-
+				const modelPath = getModelPath(options);
 				if (!(await fs.stat(modelPath))) {
 					throw new Error(`Model not found at "${modelPath}".`);
 				}
@@ -83,6 +76,12 @@ export function createWhisperClient(
 			}
 		},
 	};
+}
+
+function getModelPath(options: WhisperOptions) {
+	return "modelPath" in options
+		? options.modelPath
+		: path.join(nodeModulesModelPath, modelFileNames[options.modelName]);
 }
 
 // option flags list: https://github.com/ggerganov/whisper.cpp/blob/master/README.md?plain=1#L91
