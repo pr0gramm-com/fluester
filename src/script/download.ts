@@ -61,42 +61,36 @@ async function determineModel() {
 	process.exit(-1);
 }
 
-export default async function downloadModel() {
-	try {
-		// shell.exec("echo $PWD");
-		process.chdir(nodeModulesModelPath);
+try {
+	process.chdir(nodeModulesModelPath);
 
-		// ensure running in correct path
-		if (!(await canExecute("./download-ggml-model.sh"))) {
-			throw new Error(
-				"Cannot run downloader. Maybe the path is incorrect or the current working directory is not correct.",
-			);
-		}
-
-		const modelName = await determineModel();
-
-		const scriptPath =
-			process.platform === "win32"
-				? "download-ggml-model.cmd"
-				: "./download-ggml-model.sh";
-
-		await execute(scriptPath, [modelName], true);
-
-		console.log("Attempting to compile model...");
-
-		// move up directory, run make in whisper.cpp
-		process.chdir("../");
-
-		// this has to run in whichever directory the model is located in??
-		await execute("make"); // TODO: Move this to a postInstall
-
-		process.exit(0);
-	} catch (error) {
-		console.log("Error while downloading model:");
-		console.log(error);
-		throw error;
+	// ensure running in correct path
+	if (!(await canExecute("./download-ggml-model.sh"))) {
+		throw new Error(
+			"Cannot run downloader. Maybe the path is incorrect or the current working directory is not correct.",
+		);
 	}
-}
 
-// runs after being called in package.json
-downloadModel();
+	const modelName = await determineModel();
+
+	const scriptPath =
+		process.platform === "win32"
+			? "download-ggml-model.cmd"
+			: "./download-ggml-model.sh";
+
+	await execute(scriptPath, [modelName], true);
+
+	console.log("Attempting to compile model...");
+
+	// move up directory, run make in whisper.cpp
+	process.chdir("../");
+
+	// this has to run in whichever directory the model is located in??
+	await execute("make"); // TODO: Move this to a postInstall
+
+	process.exit(0);
+} catch (error) {
+	console.log("Error while downloading model:");
+	console.log(error);
+	throw error;
+}
