@@ -20,8 +20,6 @@ export async function whisper(
 	filePath: string,
 	options?: WhisperOptions,
 ): Promise<TranscriptLine[]> {
-	console.log("Transcribing:", filePath, "\n");
-
 	try {
 		// todo: combine steps 1 & 2 into separate function called whisperCpp (createCppCommand + shell)
 
