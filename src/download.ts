@@ -16,7 +16,19 @@ import {
 	nodeModulesModelPath,
 } from "./model.js";
 
-async function askModel() {
+async function determineModel() {
+	// ["/usr/bin/node", "../.bin/download", "download", <model anem>]
+	const parameterModel = process.argv[3];
+	if (parameterModel) {
+		if (modelList.includes(parameterModel as ModelName)) {
+			return parameterModel;
+		}
+
+		console.error(`Invalid model name: "${parameterModel}"`);
+		console.log(`Valid model names are: ${modelList.join(", ")}`);
+		process.exit(-1);
+	}
+
 	const envModel = process.env.WHISPER_MODEL;
 	if (!!envModel && modelList.includes(envModel as ModelName)) {
 		return envModel;
@@ -47,7 +59,7 @@ async function askModel() {
 		return answer;
 	}
 
-	console.error(`Invalid model name: ${answer}`);
+	console.error(`Invalid model name: "${answer}"`);
 	console.log(`Valid model names are: ${modelList.join(", ")}`);
 	process.exit(-1);
 }
@@ -64,7 +76,7 @@ export default async function downloadModel() {
 			);
 		}
 
-		const modelName = await askModel();
+		const modelName = await determineModel();
 
 		const scriptPath =
 			process.platform === "win32"
