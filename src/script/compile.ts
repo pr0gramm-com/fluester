@@ -1,16 +1,17 @@
+#!/usr/bin/env node
+
 import path from "node:path";
 import url from "node:url";
 
-import { canExecute, execute } from "./execute.js";
+import { canExecute, execute } from "../execute.js";
 
 const dirName = url.fileURLToPath(new URL(".", import.meta.url));
 
 // Docs: https://github.com/ggerganov/whisper.cpp
-const whisperCppPath = path.join(dirName, "..", "lib/whisper.cpp");
+const whisperCppPath = path.join(dirName, "..", "..", "lib/whisper.cpp");
 const whisperCppMain = "main";
 
 try {
-	// process.chdir(dirName + WHISPER_CPP_PATH);
 	process.chdir(whisperCppPath);
 
 	if (!(await canExecute(whisperCppMain))) {
