@@ -85,10 +85,12 @@ function getFlags(flags: FlagTypes): string[] {
 
 	// timestamps
 	if (flags.timestampSize) {
-		s.push(`-ml ${flags.timestampSize}`);
+		s.push("-ml");
+		s.push(flags.timestampSize.toString());
 	}
 	if (flags.wordTimestamps) {
-		s.push("-ml 1");
+		s.push("-ml");
+		s.push("1");
 	}
 
 	return s;
