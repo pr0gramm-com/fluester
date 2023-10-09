@@ -19,9 +19,6 @@
     "lint:apply": "biome lint --apply src",
     "test": "node dist/test.js"
   },
-  "dependencies": {
-    "shelljs": "^0.8.5"
-  },
   "devDependencies": {
     "@biomejs/biome": "^1.2.2",
     "@types/node": "^20.8.3",
