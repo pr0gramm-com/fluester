@@ -5,9 +5,7 @@
 
 import { createInterface } from "node:readline/promises";
 
-import shell from "shelljs";
-
-import { runCommand } from "./execute.js";
+import { runCommand, canExecute } from "./execute.js";
 import {
 	ModelName,
 	defaultModel,
@@ -17,7 +15,7 @@ import {
 } from "./model.js";
 
 async function determineModel() {
-	// ["/usr/bin/node", "../.bin/download", "download", <model anem>]
+	// ["/usr/bin/node", "../.bin/download", "download", <model name>]
 	const parameterModel = process.argv[3];
 	if (parameterModel) {
 		if (modelList.includes(parameterModel as ModelName)) {
@@ -70,9 +68,9 @@ export default async function downloadModel() {
 		process.chdir(nodeModulesModelPath);
 
 		// ensure running in correct path
-		if (!shell.which("./download-ggml-model.sh")) {
+		if (!(await canExecute("./download-ggml-model.sh"))) {
 			throw new Error(
-				"Downloader is not being run from the correct path! cd to project root and run again.",
+				"Cannot run downloader. Maybe the path is incorrect or the current working directory is not correct.",
 			);
 		}
 
@@ -83,7 +81,7 @@ export default async function downloadModel() {
 				? "download-ggml-model.cmd"
 				: "./download-ggml-model.sh";
 
-		shell.exec(`${scriptPath} ${modelName}`);
+		await runCommand(scriptPath, [modelName]);
 
 		console.log("Attempting to compile model...");
 
