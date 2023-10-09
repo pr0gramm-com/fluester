@@ -1,6 +1,32 @@
 import { existsSync } from "node:fs";
 
+import { defaultExecutablePath } from "./interop.js";
 import { ModelName, modelFileNames } from "./model.js";
+
+export interface WhisperClientOptions {
+	/** Path to the whisper executable */
+	executablePath?: string;
+	/** Path to the whisper models */
+	// modelsPath: string;
+}
+
+export interface WhisperClient {
+	run: () => Promise<void>;
+}
+
+export function createWhisperClient(
+	options: WhisperClientOptions,
+): WhisperClient {
+	const effectiveOptions = {
+		executablePath: defaultExecutablePath,
+		...options,
+	};
+
+	return {
+		// TODO
+		run: async () => {},
+	};
+}
 
 export type AppCommand = [command: string, args: readonly string[]];
 
