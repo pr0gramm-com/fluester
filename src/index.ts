@@ -36,7 +36,7 @@ export async function whisper(
 		const transcript = await execute(...command);
 
 		// 3. parse whisper response string into array
-		return transcriptToArray(transcript);
+		return transcriptToArray(transcript.toString());
 	} catch (cause) {
 		throw new Error("Error during whisper operation", { cause });
 	}
