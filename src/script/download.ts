@@ -5,14 +5,14 @@
 
 import { createInterface } from "node:readline/promises";
 
-import { canExecute, execute } from "./execute.js";
+import { canExecute, execute } from "../execute.js";
 import {
 	ModelName,
 	defaultModel,
 	modelList,
 	modelStats,
 	nodeModulesModelPath,
-} from "./model.js";
+} from "../model.js";
 
 async function determineModel() {
 	// ["/usr/bin/node", "../.bin/download", "download", <model name>]
