@@ -35,10 +35,9 @@ async function determineModel() {
 	const rl = createInterface({ input: process.stdin, output: process.stdout });
 
 	console.log("Which model should be downloaded?");
-	console.log(
-		"You can skip this question and pass the model as an env var: WHISPER_MODEL=tiny",
-	);
-
+	console.log("You can skip this question by:");
+	console.log("- passing the model as an env var: WHISPER_MODEL=tiny or");
+	console.log("- as a parameter: `npx @pr0gramm/fluester download tiny`");
 	console.table(modelStats);
 
 	const answer = await rl.question(
