@@ -19,9 +19,14 @@ Node.js bindings for OpenAI's Whisper. Hard-fork of [whisper-node](https://githu
 npm install @pr0gramm/fluester
 ```
 
-1. Download whisper model of choice
+2. Download whisper model of choice
 ```sh
 npx @pr0gramm/fluester download
+```
+
+1. Compile whisper.cpp if you don't want to provide you own version:
+```sh
+npx @pr0gramm/fluester compile
 ```
 
 ## Usage

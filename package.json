@@ -8,10 +8,10 @@
   "main": "dist/index.js",
   "type": "module",
   "bin": {
-    "download": "dist/script/download.js"
+    "download": "dist/script/download.js",
+    "compile": "dist/script/compile.js"
   },
   "scripts": {
-    "prepare": "tsc && node dist/script/compile.js",
     "start": "bun --watch src/index.ts",
     "build": "tsc",
     "ci": "biome ci src",
