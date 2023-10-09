@@ -9,6 +9,10 @@ Node.js bindings for OpenAI's Whisper. Hard-fork of [whisper-node](https://githu
 - Timestamp precision to single word
 
 ## Installation
+### Requirements
+- `make`
+- Everything else listed as required to compile [whisper.cpp](https://github.com/ggerganov/whisper.cpp)
+
 1. Add dependency to project
 ```sh
 npm install @pr0gramm/fluester
