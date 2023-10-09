@@ -6,13 +6,8 @@
 import { createInterface } from "node:readline/promises";
 
 import { canExecute, execute } from "../execute.js";
-import {
-	ModelName,
-	defaultModel,
-	modelList,
-	modelStats,
-} from "../model.js";
 import { nodeModulesModelPath } from "../interop.js";
+import { ModelName, defaultModel, modelList, modelStats } from "../model.js";
 
 async function determineModel() {
 	// ["/usr/bin/node", "../.bin/download", "download", <model name>]
