@@ -10,8 +10,8 @@ import { nodeModulesModelPath } from "../interop.js";
 import { ModelName, defaultModel, modelList, modelStats } from "../model.js";
 
 async function determineModel() {
-	// ["/usr/bin/node", "../.bin/download", "download", <model name>]
-	const parameterModel = process.argv[3];
+	// ["/usr/bin/node", "../.bin/download", <model name>]
+	const parameterModel = process.argv[2];
 	if (parameterModel) {
 		if (modelList.includes(parameterModel as ModelName)) {
 			return parameterModel;

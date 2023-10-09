@@ -8,8 +8,8 @@
   "main": "dist/index.js",
   "type": "module",
   "bin": {
-    "download": "dist/script/download.js",
-    "compile": "dist/script/compile.js"
+    "download-whisper": "dist/script/download.js",
+    "compile-whisper": "dist/script/compile.js"
   },
   "scripts": {
     "start": "bun --watch src/index.ts",

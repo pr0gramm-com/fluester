@@ -20,12 +20,12 @@ npm install @pr0gramm/fluester
 
 2. Download whisper model of choice
 ```sh
-npx @pr0gramm/fluester download
+npx --package @pr0gramm/fluester download-whisper
 ```
 
 3. Compile whisper.cpp if you don't want to provide you own version:
 ```sh
-npx @pr0gramm/fluester compile
+npx --package @pr0gramm/fluester compile-whisper
 ```
 
 ## Usage
