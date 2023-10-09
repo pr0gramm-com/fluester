@@ -58,11 +58,11 @@ const options = {
   modelName: "tiny.en", // default
   modelPath: "/custom/path/to/model.bin", // use model in a custom directory
   whisperOptions: {
-    gen_file_txt: false, // outputs .txt file
-    gen_file_subtitle: false, // outputs .srt file
-    gen_file_vtt: false, // outputs .vtt file
-    timestamp_size: 10, // amount of dialogue per timestamp pair
-    word_timestamps: true // timestamp for every word
+    generateTxt: false, // outputs .txt file
+    generateSubtitles: false, // outputs .srt file
+    generateVtt: false, // outputs .vtt file
+    timestampSize: 10, // amount of dialogue per timestamp pair
+    wordTimestamps: true // timestamp for every word
   }
 }
 
