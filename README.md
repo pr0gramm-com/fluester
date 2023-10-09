@@ -67,8 +67,6 @@ const transcript = await whisper(filePath, options);
 ## Made with
 - A lot of love by @ariym at [whisper-node](https://github.com/ariym/whisper-node)
 - [Whisper OpenAI (using C++ port by: ggerganov)](https://github.com/ggerganov/whisper.cpp)
-- [ShellJS](https://www.npmjs.com/package/shelljs)
 
 ## Roadmap
-- Drop ShellJS, use native/builtin stuff
 - Nothing ¯\\_(ツ)_/¯
