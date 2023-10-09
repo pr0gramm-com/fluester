@@ -74,4 +74,4 @@ const transcript = await whisper(filePath, options);
 - [Whisper OpenAI (using C++ port by: ggerganov)](https://github.com/ggerganov/whisper.cpp)
 
 ## Roadmap
-- Nothing ¯\\_(ツ)_/¯
+- Nothing ¯\\\_(ツ)_/¯

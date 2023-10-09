@@ -44,7 +44,7 @@ function modelPathOrName(
 }
 
 // option flags list: https://github.com/ggerganov/whisper.cpp/blob/master/README.md?plain=1#L91
-function getFlags(flags: FlagTypes): string {
+function getFlags(flags: FlagTypes): string[] {
 	const s = [];
 
 	// output files
@@ -66,7 +66,7 @@ function getFlags(flags: FlagTypes): string {
 		s.push("-ml 1");
 	}
 
-	return s.join(" ");
+	return s;
 }
 
 export interface CppCommandTypes {
