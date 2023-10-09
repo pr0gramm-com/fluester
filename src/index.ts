@@ -9,8 +9,6 @@ import transcriptToArray, { TranscriptLine } from "./tsToArray.js";
 export interface WhisperClientOptions {
 	/** Path to the whisper executable */
 	executablePath?: string;
-	/** Path to the whisper models */
-	// modelsPath: string;
 }
 
 export interface WhisperOptionsBase {
@@ -35,6 +33,11 @@ export type WhisperOptions =
 	| WhisperOptionsWithModelName;
 
 export interface WhisperClient {
+	/**
+	 * @param filePath The audio file to translate.
+	 * @param options
+	 * @returns English translation of the audio file. If it's already english, it will be a transcription.
+	 */
 	translate: (
 		filePath: string,
 		options: WhisperOptions,
@@ -51,6 +54,11 @@ export function createWhisperClient(
 
 	return {
 		// TODO
+		/**
+		 * @param filePath The audio file to translate.
+		 * @param options
+		 * @returns English translation of the audio file. If it's already english, it will be a transcription.
+		 */
 		translate: async (filePath: string, options: WhisperOptions) => {
 			try {
 				const modelPath = getModelPath(options);
