@@ -6,20 +6,13 @@ import { defaultExecutablePath, nodeModulesModelPath } from "./interop.js";
 import { ModelName, modelFileNames } from "./model.js";
 import transcriptToArray, { TranscriptLine } from "./transcript.js";
 
-export interface WhisperClientOptions {
+export interface WhisperClientOptionsBase {
 	/** Path to the whisper executable */
 	executablePath?: string;
 }
 
-export interface WhisperOptionsBase {
-	whisperOptions?: FlagTypes;
-	// TODO: AbortSignal support
-}
-
-export interface WhisperOptionsWithModelPath extends WhisperOptionsBase {
-	modelPath: string;
-}
-export interface WhisperOptionsWithModelName extends WhisperOptionsBase {
+export interface WhisperClientOptionsWithModelName
+	extends WhisperClientOptionsBase {
 	/**
 	 * Name of model stored in `node_modules/@pr0gramm/fluester/lib/whisper.cpp/models`
 	 *
@@ -27,10 +20,20 @@ export interface WhisperOptionsWithModelName extends WhisperOptionsBase {
 	 */
 	modelName: ModelName;
 }
+export interface WhisperClientOptionsWithModelPath
+	extends WhisperClientOptionsBase {
+	modelPath: string;
+}
 
-export type WhisperOptions =
-	| WhisperOptionsWithModelPath
-	| WhisperOptionsWithModelName;
+export type WhisperClientOptions =
+	| WhisperClientOptionsWithModelName
+	| WhisperClientOptionsWithModelPath;
+
+export interface WhisperOptions {
+	whisperOptions?: FlagTypes;
+	sourceLanguage?: string;
+	// TODO: AbortSignal support
+}
 
 export interface WhisperClient {
 	/**
@@ -50,6 +53,7 @@ export function createWhisperClient(
 	const effectiveOptions = {
 		executablePath: defaultExecutablePath,
 		...options,
+		modelPath: getModelPath(options),
 	};
 
 	return {
@@ -61,9 +65,8 @@ export function createWhisperClient(
 		 */
 		translate: async (filePath: string, options: WhisperOptions) => {
 			try {
-				const modelPath = getModelPath(options);
-				if (!(await fs.stat(modelPath))) {
-					throw new Error(`Model not found at "${modelPath}".`);
+				if (!(await fs.stat(effectiveOptions.modelPath))) {
+					throw new Error(`Model not found at "${effectiveOptions.modelPath}".`);
 				}
 
 				// 1. create command string for whisper.cpp
@@ -71,7 +74,7 @@ export function createWhisperClient(
 					? getFlags(options.whisperOptions)
 					: [];
 
-				const args = [...flags, "-m", modelPath, "-f", filePath];
+				const args = [...flags, "-m", effectiveOptions.modelPath, "-f", filePath];
 
 				// 2. run command in whisper.cpp directory
 				// TODO: add return for continually updated progress value
@@ -86,7 +89,7 @@ export function createWhisperClient(
 	};
 }
 
-function getModelPath(options: WhisperOptions) {
+function getModelPath(options: WhisperClientOptions) {
 	return "modelPath" in options
 		? options.modelPath
 		: path.join(nodeModulesModelPath, modelFileNames[options.modelName]);
