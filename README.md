@@ -71,6 +71,28 @@ const options = {
 const transcript = await whisper(filePath, options);
 ```
 
+
+## Tricks
+This library is designed to work well in dockerized environments.
+
+We took time and made some steps independent from each other, so they can be used in a multi-stage docker build.
+```Dockerfile
+FROM node:latest as dependencies
+    WORKDIR /app
+    COPY package.json package-lock.json ./
+    RUN npm ci
+
+    RUN npx --package @pr0gramm/fluester compile-whisper
+    RUN npx --package @pr0gramm/fluester download-model tiny
+
+FROM node:latest
+    WORKDIR /app
+    COPY --from=dependencies /app/node_modules /app/node_modules
+    COPY ./ ./
+```
+
+This includes the model in the image. If you want to keep your image small, you can also download the model in your entrypoint using.
+
 ## Made with
 - A lot of love by @ariym at [whisper-node](https://github.com/ariym/whisper-node)
 - [Whisper OpenAI (using C++ port by: ggerganov)](https://github.com/ggerganov/whisper.cpp)
