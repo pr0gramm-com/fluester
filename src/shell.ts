@@ -1,23 +1,13 @@
 import path from "node:path";
 import url from "node:url";
-import * as fs from "node:fs/promises";
 
-import { runCommand } from "./child.js";
+import { runCommand, canExecute } from "./execute.js";
 
 const dirName = url.fileURLToPath(new URL(".", import.meta.url));
 
 // Docs: https://github.com/ggerganov/whisper.cpp
 const whisperCppPath = path.join(dirName, "..", "lib/whisper.cpp");
 const whisperCppMain = "main";
-
-async function canExecute(file: string) {
-	try {
-		await fs.access(file, fs.constants.X_OK);
-		return true;
-	} catch {
-		return false;
-	}
-}
 
 try {
 	// process.chdir(dirName + WHISPER_CPP_PATH);

@@ -1,6 +1,6 @@
 import path from "node:path";
 
-import { runCommand } from "./child.js";
+import { runCommand } from "./execute.js";
 import type { ModelName } from "./model.js";
 import transcriptToArray, { TranscriptLine } from "./tsToArray.js";
 import { FlagTypes, buildExecCommand } from "./whisper.js";

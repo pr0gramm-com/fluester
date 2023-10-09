@@ -7,7 +7,7 @@ import { createInterface } from "node:readline/promises";
 
 import shell from "shelljs";
 
-import { runCommand } from "./child.js";
+import { runCommand } from "./execute.js";
 import {
 	ModelName,
 	defaultModel,

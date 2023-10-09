@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import * as fs from "node:fs/promises";
 
 export async function runCommand(
 	command: string,
@@ -11,4 +12,13 @@ export async function runCommand(
 	}
 	const result = Buffer.concat(chunks);
 	return result.toString();
+}
+
+export async function canExecute(file: string) {
+	try {
+		await fs.access(file, fs.constants.X_OK);
+		return true;
+	} catch {
+		return false;
+	}
 }
