@@ -56,25 +56,29 @@ export function createWhisperClient(
 		modelPath: getModelPath(options),
 	};
 
-	return {
-		// TODO
-		/**
-		 * @param filePath The audio file to translate.
-		 * @param options
-		 * @returns English translation of the audio file. If it's already english, it will be a transcription.
-		 */
-		translate: async (filePath: string, options: WhisperOptions) => {
-			try {
-				if (!(await fs.stat(effectiveOptions.modelPath))) {
-					throw new Error(`Model not found at "${effectiveOptions.modelPath}".`);
-				}
+	async function ensureModel() {
+		if (!(await fs.stat(effectiveOptions.modelPath))) {
+			throw new Error(`Model not found at "${effectiveOptions.modelPath}".`);
+		}
+	}
 
+	return {
+		translate: async (filePath: string, options: WhisperOptions) => {
+			await ensureModel();
+
+			try {
 				// 1. create command string for whisper.cpp
 				const flags = options.whisperOptions
 					? getFlags(options.whisperOptions)
 					: [];
 
-				const args = [...flags, "-m", effectiveOptions.modelPath, "-f", filePath];
+				const args = [
+					...flags,
+					"-m",
+					effectiveOptions.modelPath,
+					"-f",
+					filePath,
+				];
 
 				// 2. run command in whisper.cpp directory
 				// TODO: add return for continually updated progress value
