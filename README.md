@@ -1,5 +1,4 @@
-# fluester – [ˈflʏstɐ] [![CI](https://github.com/pr0gramm-com/fluester/actions/workflows/CI.yml/badge.svg)](https://github.com/pr0gramm-com/fluester/actions/workflows/CI.yml) [![CD](https://github.com/pr0gramm-com/fluester/actions/workflows/CD.yml/badge.svg)](https://github.com/pr0gramm-com/fluester/actions/workflows/CD.yml) ![version](https://img.shields.io/npm/v/%40pr0gramm/fluester) ![downloads](https://img.shields.io/npm/dm/%40pr0gramm/fluester)
- ![License](https://img.shields.io/npm/l/%40pr0gramm%2Ffluester)
+# fluester – [ˈflʏstɐ] [![CI](https://github.com/pr0gramm-com/fluester/actions/workflows/CI.yml/badge.svg)](https://github.com/pr0gramm-com/fluester/actions/workflows/CI.yml) [![CD](https://github.com/pr0gramm-com/fluester/actions/workflows/CD.yml/badge.svg)](https://github.com/pr0gramm-com/fluester/actions/workflows/CD.yml) ![version](https://img.shields.io/npm/v/%40pr0gramm/fluester) ![downloads](https://img.shields.io/npm/dm/%40pr0gramm/fluester) ![License](https://img.shields.io/npm/l/%40pr0gramm%2Ffluester)
 
 Node.js bindings for OpenAI's Whisper. Hard-fork of [whisper-node](https://github.com/ariym/whisper-node).
 
