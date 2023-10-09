@@ -1,7 +1,7 @@
 import path from "node:path";
 import url from "node:url";
 
-import { canExecute, runCommand } from "./execute.js";
+import { canExecute, execute } from "./execute.js";
 
 const dirName = url.fileURLToPath(new URL(".", import.meta.url));
 
@@ -17,7 +17,7 @@ try {
 		console.error(`whisper.cpp not initialized. Current directory: ${dirName}`);
 		console.error(`attempting to run "make" command in whisper directory...`);
 
-		await runCommand("make");
+		await execute("make");
 
 		if (!(await canExecute(whisperCppMain))) {
 			console.error(

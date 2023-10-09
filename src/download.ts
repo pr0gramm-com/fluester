@@ -5,7 +5,7 @@
 
 import { createInterface } from "node:readline/promises";
 
-import { canExecute, runCommand } from "./execute.js";
+import { canExecute, execute } from "./execute.js";
 import {
 	ModelName,
 	defaultModel,
@@ -80,7 +80,7 @@ export default async function downloadModel() {
 				? "download-ggml-model.cmd"
 				: "./download-ggml-model.sh";
 
-		await runCommand(scriptPath, [modelName]);
+		await execute(scriptPath, [modelName], true);
 
 		console.log("Attempting to compile model...");
 
@@ -88,7 +88,7 @@ export default async function downloadModel() {
 		process.chdir("../");
 
 		// this has to run in whichever directory the model is located in??
-		await runCommand("make");
+		await execute("make"); // TODO: Move this to a postInstall
 
 		process.exit(0);
 	} catch (error) {

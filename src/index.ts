@@ -1,6 +1,6 @@
 import path from "node:path";
 
-import { runCommand } from "./execute.js";
+import { execute } from "./execute.js";
 import type { ModelName } from "./model.js";
 import transcriptToArray, { TranscriptLine } from "./tsToArray.js";
 import { FlagTypes, buildExecCommand } from "./whisper.js";
@@ -33,7 +33,7 @@ export async function whisper(
 
 		// 2. run command in whisper.cpp directory
 		// todo: add return for continually updated progress value
-		const transcript = await runCommand(...command);
+		const transcript = await execute(...command);
 
 		// 3. parse whisper response string into array
 		return transcriptToArray(transcript);

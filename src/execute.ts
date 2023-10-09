@@ -1,11 +1,15 @@
 import { spawn } from "node:child_process";
 import * as fs from "node:fs/promises";
 
-export async function runCommand(
+export async function execute(
 	command: string,
 	args?: readonly string[],
+	shell = false,
 ): Promise<string> {
-	const child = spawn(command, args);
+	const child = spawn(command, args, {
+		shell,
+	});
+
 	const chunks = await child.stdout.toArray();
 	if (child.exitCode !== 0) {
 		throw new Error(`Process returned with exit code ${child.exitCode}.`);
