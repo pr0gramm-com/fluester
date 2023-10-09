@@ -5,7 +5,7 @@
 
 import { createInterface } from "node:readline/promises";
 
-import { runCommand, canExecute } from "./execute.js";
+import { canExecute, runCommand } from "./execute.js";
 import {
 	ModelName,
 	defaultModel,

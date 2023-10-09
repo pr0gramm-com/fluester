@@ -1,7 +1,7 @@
 import path from "node:path";
 import url from "node:url";
 
-import { runCommand, canExecute } from "./execute.js";
+import { canExecute, runCommand } from "./execute.js";
 
 const dirName = url.fileURLToPath(new URL(".", import.meta.url));
 
