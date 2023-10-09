@@ -77,7 +77,7 @@ export function createWhisperClient(
 				const transcript = await execute(effectiveOptions.executablePath, args);
 
 				// 3. parse whisper response string into array
-				return transcriptToArray(transcript.toString());
+				return transcriptToArray(transcript.stdout.toString());
 			} catch (cause) {
 				throw new Error("Error during whisper operation", { cause });
 			}
