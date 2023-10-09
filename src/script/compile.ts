@@ -10,7 +10,7 @@ try {
 	process.chdir(nodeModulesWhisper);
 
 	if (!(await canExecute(whisperCppMain))) {
-		console.log("whisper.cpp not initialized. Compiling whisper.cpp...");
+		console.log("whisper.cpp not initialized, compiling...");
 
 		await execute("make");
 
@@ -26,7 +26,7 @@ try {
 	if (test.exitCode === 0 && test.stderr.length > 0) {
 		console.log("whisper.cpp initialized successfully");
 	} else {
-		console.error("Could not run whisper.cpp");
+		console.error("Could not test-run whisper.cpp");
 		process.exit(-1);
 	}
 } catch (error) {
