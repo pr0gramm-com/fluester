@@ -11,8 +11,8 @@ import {
 	defaultModel,
 	modelList,
 	modelStats,
-	nodeModulesModelPath,
 } from "../model.js";
+import { nodeModulesModelPath } from "../interop.js";
 
 async function determineModel() {
 	// ["/usr/bin/node", "../.bin/download", "download", <model name>]

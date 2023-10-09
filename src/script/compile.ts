@@ -1,18 +1,13 @@
 #!/usr/bin/env node
 
-import path from "node:path";
-import url from "node:url";
-
 import { canExecute, execute } from "../execute.js";
-
-const dirName = url.fileURLToPath(new URL(".", import.meta.url));
+import { nodeModulesWhisper } from "../interop.js";
 
 // Docs: https://github.com/ggerganov/whisper.cpp
-const whisperCppPath = path.join(dirName, "..", "..", "lib/whisper.cpp");
 const whisperCppMain = "./main";
 
 try {
-	process.chdir(whisperCppPath);
+	process.chdir(nodeModulesWhisper);
 
 	if (!(await canExecute(whisperCppMain))) {
 		console.log("whisper.cpp not initialized. Compiling whisper.cpp...");
@@ -21,7 +16,7 @@ try {
 
 		if (!(await canExecute(whisperCppMain))) {
 			console.error(
-				`"make" command failed. Please run "make" command in whisper directory. Current directory: ${dirName}`,
+				`"make" command failed. Please run "make" command in whisper directory. Current directory: ${nodeModulesWhisper}`,
 			);
 			process.exit(-1);
 		}

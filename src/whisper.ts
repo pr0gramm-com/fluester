@@ -1,4 +1,3 @@
-// todo: remove all imports from file
 import { existsSync } from "node:fs";
 
 import { ModelName, modelFileNames } from "./model.js";
