@@ -75,13 +75,7 @@ try {
 
 	await execute(scriptPath, [modelName], true);
 
-	console.log("Attempting to compile model...");
-
-	// move up directory, run make in whisper.cpp
-	process.chdir("../");
-
-	// this has to run in whichever directory the model is located in??
-	await execute("make"); // TODO: Move this to a postInstall
+	console.log(`Model "${modelName}" downloaded successfully.`);
 
 	process.exit(0);
 } catch (error) {
