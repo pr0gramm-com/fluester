@@ -4,7 +4,7 @@ import * as path from "node:path";
 import { execute } from "./execute.js";
 import { defaultExecutablePath, nodeModulesModelPath } from "./interop.js";
 import { ModelName, modelFileNames } from "./model.js";
-import transcriptToArray, { TranscriptLine } from "./tsToArray.js";
+import transcriptToArray, { TranscriptLine } from "./transcript.js";
 
 export interface WhisperClientOptions {
 	/** Path to the whisper executable */

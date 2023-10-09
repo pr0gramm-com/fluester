@@ -14,6 +14,7 @@
   "scripts": {
     "start": "bun --watch src/index.ts",
     "build": "tsc",
+    "build:docs": "typedoc --out docs src/index.ts",
     "ci": "biome ci src",
     "format": "biome format --write src",
     "lint": "biome lint src",
@@ -24,6 +25,7 @@
     "@biomejs/biome": "^1.2.2",
     "@types/node": "^20.8.4",
     "bun": "^1.0.4",
+    "typedoc": "^0.25.2",
     "typescript": "^5.2.2"
   },
   "repository": {
