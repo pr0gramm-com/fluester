@@ -30,9 +30,11 @@ npx --package @pr0gramm/fluester compile-whisper
 
 ## Usage
 ```js
-import whisper from "@pr0gramm/fluester";
+import { createWhisperClient } from "@pr0gramm/fluester";
 
-const transcript = await whisper("example/sample.wav");
+const client = createWhisperClient();
+
+const transcript = await client.translate("example/sample.wav");
 
 console.log(transcript); // output: [ {start,end,speech} ]
 ```

@@ -1,8 +1,8 @@
-import { existsSync } from "node:fs";
+import * as fs from "node:fs/promises";
 import * as path from "node:path";
 
 import { execute } from "./execute.js";
-import { defaultExecutablePath } from "./interop.js";
+import { defaultExecutablePath, nodeModulesModelPath } from "./interop.js";
 import { ModelName, modelFileNames } from "./model.js";
 import transcriptToArray, { TranscriptLine } from "./tsToArray.js";
 
@@ -13,15 +13,32 @@ export interface WhisperClientOptions {
 	// modelsPath: string;
 }
 
-export interface WhisperOptions {
-	modelName?: string; // name of model stored in node_modules/@pr0gramm/fluester/lib/whisper.cpp/models
-	modelPath?: string; // custom path for model
+export interface WhisperOptionsBase {
 	whisperOptions?: FlagTypes;
 	// TODO: AbortSignal support
 }
 
+export interface WhisperOptionsWithModelPath extends WhisperOptionsBase {
+	modelPath: string;
+}
+export interface WhisperOptionsWithModelName extends WhisperOptionsBase {
+	/**
+	 * Name of model stored in `node_modules/@pr0gramm/fluester/lib/whisper.cpp/models`
+	 *
+	 * The name you entered when downloading the model.
+	 */
+	modelName: ModelName;
+}
+
+export type WhisperOptions =
+	| WhisperOptionsWithModelPath
+	| WhisperOptionsWithModelName;
+
 export interface WhisperClient {
-	translate: (filePath: string, options: WhisperOptions) => Promise<TranscriptLine[]>;
+	translate: (
+		filePath: string,
+		options: WhisperOptions,
+	) => Promise<TranscriptLine[]>;
 }
 
 export function createWhisperClient(
@@ -34,18 +51,29 @@ export function createWhisperClient(
 
 	return {
 		// TODO
-		translate: async (filePath: string, options?: WhisperOptions) => {
+		translate: async (filePath: string, options: WhisperOptions) => {
 			try {
+				const modelPath =
+					"modelPath" in options
+						? options.modelPath
+						: path.join(
+								nodeModulesModelPath,
+								modelFileNames[options.modelName],
+						  );
+
+				if (!(await fs.stat(modelPath))) {
+					throw new Error(`Model not found at "${modelPath}".`);
+				}
+
 				// 1. create command string for whisper.cpp
-				const args = buildCliArgs({
-					filePath: path.normalize(filePath),
-					modelName: options?.modelName as ModelName,
-					modelPath: options?.modelPath,
-					options: options?.whisperOptions,
-				});
+				const flags = options.whisperOptions
+					? getFlags(options.whisperOptions)
+					: [];
+
+				const args = [...flags, "-m", modelPath, "-f", filePath];
 
 				// 2. run command in whisper.cpp directory
-				// todo: add return for continually updated progress value
+				// TODO: add return for continually updated progress value
 				const transcript = await execute(effectiveOptions.executablePath, args);
 
 				// 3. parse whisper response string into array
@@ -55,44 +83,6 @@ export function createWhisperClient(
 			}
 		},
 	};
-
-	function buildCliArgs({
-		filePath,
-		modelName = undefined,
-		modelPath = undefined,
-		options = { wordTimestamps: true },
-	}: CppCommandTypes) {
-		const model = modelPathOrName(modelName, modelPath);
-		return [...getFlags(options), "-m", model, "-f", filePath];
-	}
-}
-
-function modelPathOrName(
-	modelName: ModelName | undefined,
-	modelPath: string | undefined,
-) {
-	if (modelName && modelPath) {
-		throw new Error("Submit a modelName OR a modelPath. NOT BOTH!");
-	}
-	if (!modelName && !modelPath) {
-		throw new Error("No 'modelName' or 'modelPath' provided");
-	}
-
-	if (modelPath) {
-		return modelPath;
-	}
-
-	if (!modelName || !(modelName in modelFileNames)) {
-		throw new Error(`Invalid model name: "${modelName}"`);
-	}
-
-	const correspondingPath = `./models/${modelFileNames[modelName]}`;
-	if (!existsSync(correspondingPath)) {
-		throw new Error(
-			`"${modelName}" not found. Run "npx @pr0gramm/fluester download"`,
-		);
-	}
-	return correspondingPath;
 }
 
 // option flags list: https://github.com/ggerganov/whisper.cpp/blob/master/README.md?plain=1#L91
