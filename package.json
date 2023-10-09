@@ -11,6 +11,7 @@
     "download": "dist/script/download.js"
   },
   "scripts": {
+    "prepare": "node dist/script/compile.js",
     "start": "bun --watch src/index.ts",
     "build": "tsc",
     "ci": "biome ci src",

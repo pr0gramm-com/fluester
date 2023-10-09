@@ -1,26 +1,33 @@
 import { spawn } from "node:child_process";
 import * as fs from "node:fs/promises";
 
+export interface ExecuteResult {
+	exitCode: number | null;
+	stdout: Buffer;
+	stderr: Buffer;
+}
+
 export async function execute(
 	command: string,
 	args?: readonly string[],
 	shell = false,
-): Promise<Buffer> {
+): Promise<ExecuteResult> {
 	const child = spawn(command, args, {
 		shell,
 	});
 
 	return new Promise((resolve, reject) => {
-		const chunks: Buffer[] = [];
-		child.stdout.on("data", (d) => chunks.push(d));
-		child.stdout.once("error", reject);
-		child.stdout.once("end", () => {
-			if (child.exitCode !== 0) {
-				return reject(
-					new Error(`Process returned with exit code ${child.exitCode}.`),
-				);
-			}
-			resolve(Buffer.concat(chunks));
+		const stdOutChunks: Buffer[] = [];
+		const stdErrChunks: Buffer[] = [];
+		child.stdout.on("data", stdOutChunks.push.bind(stdOutChunks));
+		child.stderr.on("data", stdErrChunks.push.bind(stdErrChunks));
+		child.once("error", reject);
+		child.once("close", () => {
+			resolve({
+				exitCode: child.exitCode,
+				stdout: Buffer.concat(stdOutChunks),
+				stderr: Buffer.concat(stdErrChunks),
+			});
 		});
 	});
 }

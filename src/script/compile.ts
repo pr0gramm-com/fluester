@@ -9,14 +9,13 @@ const dirName = url.fileURLToPath(new URL(".", import.meta.url));
 
 // Docs: https://github.com/ggerganov/whisper.cpp
 const whisperCppPath = path.join(dirName, "..", "..", "lib/whisper.cpp");
-const whisperCppMain = "main";
+const whisperCppMain = "./main";
 
 try {
 	process.chdir(whisperCppPath);
 
 	if (!(await canExecute(whisperCppMain))) {
-		console.error(`whisper.cpp not initialized. Current directory: ${dirName}`);
-		console.error(`attempting to run "make" command in whisper directory...`);
+		console.log("whisper.cpp not initialized. Compiling whisper.cpp...");
 
 		await execute("make");
 
@@ -26,10 +25,16 @@ try {
 			);
 			process.exit(-1);
 		}
+	}
 
-		console.log(`"make" command successful. Current directory: ${dirName}`);
+	const test = await execute(whisperCppMain, ["--help"]);
+	if (test.exitCode === 0 && test.stderr.length > 0) {
+		console.log("whisper.cpp initialized successfully");
+	} else {
+		console.error("Could not run whisper.cpp");
+		process.exit(-1);
 	}
 } catch (error) {
-	console.log("error caught in try catch block");
+	console.log("Error caught");
 	throw error;
 }
