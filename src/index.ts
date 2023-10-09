@@ -4,7 +4,10 @@ import * as path from "node:path";
 import { execute } from "./execute.js";
 import { defaultExecutablePath, nodeModulesModelPath } from "./interop.js";
 import { ModelName, modelFileNames } from "./model.js";
-import transcriptToArray, { TranscriptLine } from "./transcript.js";
+import transcriptToArray, {
+	TranscriptLine,
+	parseDetectedLanguage,
+} from "./transcript.js";
 
 export interface WhisperClientOptionsBase {
 	/** Path to the whisper executable */
@@ -45,6 +48,7 @@ export interface WhisperClient {
 		filePath: string,
 		options: WhisperOptions,
 	) => Promise<TranscriptLine[]>;
+	detectLanguage: (filePath: string) => Promise<string | undefined>;
 }
 
 export function createWhisperClient(
@@ -89,6 +93,19 @@ export function createWhisperClient(
 			} catch (cause) {
 				throw new Error("Error during whisper operation", { cause });
 			}
+		},
+
+		detectLanguage: async (filePath: string) => {
+			await ensureModel();
+
+			const result = await execute(effectiveOptions.executablePath, [
+				"--detect-language",
+				"-m",
+				effectiveOptions.modelPath,
+				filePath,
+			]);
+
+			return parseDetectedLanguage(result.stderr.toString());
 		},
 	};
 }
