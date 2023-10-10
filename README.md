@@ -93,8 +93,7 @@ FROM node:latest
     COPY --from=dependencies /app/node_modules /app/node_modules
     COPY ./ ./
 ```
-
-This includes the model in the image. If you want to keep your image small, you can also download the model in your entrypoint using.
+This includes the model in the image. If you want to keep your image small, you can also download the model in your entrypoint using the commands above.
 
 ## Made with
 - A lot of love by @ariym at [whisper-node](https://github.com/ariym/whisper-node)
