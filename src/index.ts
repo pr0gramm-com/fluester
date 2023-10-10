@@ -5,6 +5,7 @@ import { execute } from "./execute.js";
 import { defaultExecutablePath, nodeModulesModelPath } from "./interop.js";
 import { ModelName, modelFileNames } from "./model.js";
 import transcriptToArray, {
+	LanguageDetectionResult,
 	TranscriptLine,
 	parseDetectedLanguage,
 } from "./transcript.js";
@@ -48,7 +49,9 @@ export interface WhisperClient {
 		filePath: string,
 		options: WhisperOptions,
 	) => Promise<TranscriptLine[]>;
-	detectLanguage: (filePath: string) => Promise<string | undefined>;
+	detectLanguage: (
+		filePath: string,
+	) => Promise<LanguageDetectionResult | undefined>;
 }
 
 export function createWhisperClient(

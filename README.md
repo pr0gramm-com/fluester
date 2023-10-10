@@ -60,8 +60,12 @@ const client = createWhisperClient({
   modelName: "base",
 });
 
-const language = await client.detectLanguage("example/sample.wav");
-console.log(`Detected: ${language ?? "nothing :("}`);
+const result = await client.detectLanguage("example/sample.wav");
+if(!result) {
+  console.log(`Detected: ${result.language} with probability ${result.probability}`);
+} else {
+  console.log("Did not detect anything :(");
+}
 ```
 
 

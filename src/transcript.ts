@@ -26,15 +26,28 @@ export default function parseTranscript(vtt: string): TranscriptLine[] {
 	});
 }
 
-export function parseDetectedLanguage(output: string): string | undefined {
+export interface LanguageDetectionResult {
+	language: string;
+	probability: number;
+}
+
+export function parseDetectedLanguage(
+	output: string,
+): LanguageDetectionResult | undefined {
 	// whisper.cpp appears to use two-letter-country-code:
 	// https://github.com/ggerganov/whisper.cpp/blob/940cdb13964a563d86c7dc6e160a43ec89b8bb2e/whisper.cpp#L195-L295
 
 	// Example line:
 	// whisper_full_with_state: auto-detected language: en (p = 0.958819)
-
-	return (
-		/auto-detected language: (\w\w)/.exec(output)?.[1]?.toLowerCase() ??
-		undefined // coerce null to undefined
+	const res = /auto-detected language: (\w\w)\s*\(p\s*=\s*(\d+\.\d+)\)/.exec(
+		output,
 	);
+	if (!res) {
+		return undefined;
+	}
+
+	return {
+		language: res[1].toLowerCase(),
+		probability: Number(res[2].trim()),
+	};
 }
