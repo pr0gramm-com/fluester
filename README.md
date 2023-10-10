@@ -28,6 +28,12 @@ npx --package @pr0gramm/fluester compile-whisper
 ```
 
 ## Usage
+*Important*: The API only supports WAV files (just like the original whisper.cpp). You need to convert any files to a supported format before.
+You can do this using ffmpeg (example [taken from the whisper project](https://github.com/ggerganov/whisper.cpp)):
+```sh
+ffmpeg -i input.mp3 -ar 16000 -ac 1 -c:a pcm_s16le output.wav
+```
+
 ### Translation
 ```js
 import { createWhisperClient } from "@pr0gramm/fluester";
