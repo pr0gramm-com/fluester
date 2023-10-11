@@ -29,9 +29,9 @@ jobs:
       - run: npm ci
       - run: npm run ci
       - run: npm test > test.tap
-      - run: cat **/*.tap
+      - run: cat test.tap
 
       - uses: test-summary/action@v2
         with:
-          paths: "**/*.tap"
+          paths: "test.tap"
         if: always()

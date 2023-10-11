@@ -24,7 +24,7 @@ jobs:
 
       - uses: test-summary/action@v2
         with:
-          paths: "**/*.tap"
+          paths: "test.tap"
         if: always()
 
 
