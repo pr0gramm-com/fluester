@@ -10,6 +10,8 @@ import transcriptToArray, {
 	parseDetectedLanguage,
 } from "./transcript.js";
 
+export { createWebVttString } from "./webvtt.js";
+
 export interface WhisperClientOptionsBase {
 	/** Path to the whisper executable */
 	executablePath?: string;

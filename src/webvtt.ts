@@ -1,6 +1,12 @@
 import type { TranscriptLine } from "./transcript.js";
 
 /**
+ * Creates a WebVTT string from a transcript which can be used for <track> elements of a <video> or <audio> tag.
+ *
+ * References:
+ * - https://en.wikipedia.org/wiki/WebVTT
+ * - https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API
+ *
  * @throws If a timestamp has an invalid length
  * @throws If start > end
  */
