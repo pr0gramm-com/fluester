@@ -7,3 +7,4 @@ biome.json
 .editorconfig
 *.tgz
 tsconfig.json
+dist/test/
