@@ -20,7 +20,13 @@ jobs:
 
       - run: npm ci
       - run: npm run ci
-      - run: npm test
+      - run: npm test > test.tap
+
+      - uses: test-summary/action@v2
+        with:
+          paths: "**/*.tap"
+        if: always()
+
 
   publish-package:
     runs-on: ubuntu-latest
