@@ -1,5 +1,5 @@
 import * as assert from "node:assert/strict";
-import { test, describe } from "node:test";
+import { describe, test } from "node:test";
 
 describe("arithmetic", () => {
 	test("2 + 2", (t) => {
