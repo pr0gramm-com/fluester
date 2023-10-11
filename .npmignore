@@ -7,5 +7,6 @@ biome.json
 .editorconfig
 *.tgz
 tsconfig.json
-dist/test/
 *.tap
+*.test.js
+*.test.d.ts
