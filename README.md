@@ -51,8 +51,8 @@ console.log(transcript); // output: [ {start,end,speech} ]
 ```js
 [
   {
-    "start": "00:00:14.310", // time stamp begin
-    "end": "00:00:16.480", // time stamp end
+    "start": "00:00:14.310", // timestamp start
+    "end": "00:00:16.480", // timestamp end
     "speech": "howdy" // transcription
   }
 ]
