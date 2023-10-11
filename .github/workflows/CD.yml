@@ -21,33 +21,6 @@ jobs:
       - run: npm ci
       - run: npm run ci
       # - run: npm test
-      - run: npm run build:docs
-
-      - uses: actions/upload-pages-artifact@v2
-        with:
-          path: ./docs
-
-  deploy-docs:
-    runs-on: ubuntu-latest
-    name: Deploy Docs
-
-    # currently, we cannot deploy from tags
-    if: false
-
-    permissions:
-      pages: write
-      id-token: write
-
-    needs: test
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
 
   publish-package:
     runs-on: ubuntu-latest
