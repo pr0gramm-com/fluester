@@ -1,8 +1,6 @@
 import * as assert from "node:assert/strict";
 import { describe, test } from "node:test";
 import { createWebVttString } from "../webvtt.js";
-import type { TranscriptLine } from "../transcript.js";
-import { AssertionError } from "node:assert";
 
 describe("webvtt", () => {
 	const basic_ok = `WEBVTT
