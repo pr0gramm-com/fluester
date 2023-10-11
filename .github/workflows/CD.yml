@@ -25,8 +25,9 @@ jobs:
       - uses: test-summary/action@v2
         with:
           paths: "**/*.tap"
-        if: always()
-
+        if: false
+        # disabled until the action fixes their TAP parsing
+        # if: always()
 
   publish-package:
     runs-on: ubuntu-latest

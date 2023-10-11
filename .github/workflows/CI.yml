@@ -29,9 +29,10 @@ jobs:
       - run: npm ci
       - run: npm run ci
       - run: npm test
-      - run: cat test.tap
 
       - uses: test-summary/action@v2
         with:
           paths: "**/*.tap"
-        if: always()
+        if: false
+        # disabled until the action fixes their TAP parsing
+        # if: always()
