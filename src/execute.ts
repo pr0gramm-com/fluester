@@ -11,9 +11,11 @@ export async function execute(
 	command: string,
 	args?: readonly string[],
 	shell = false,
+	signal?: AbortSignal,
 ): Promise<ExecuteResult> {
 	const child = spawn(command, args, {
 		shell,
+		signal,
 	});
 
 	return new Promise((resolve, reject) => {

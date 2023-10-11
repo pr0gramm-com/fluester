@@ -36,7 +36,7 @@ export type WhisperClientOptions =
 export interface WhisperOptions {
 	whisperOptions?: FlagTypes;
 	sourceLanguage?: string;
-	// TODO: AbortSignal support
+	signal?: AbortSignal;
 }
 
 export interface WhisperClient {
@@ -89,7 +89,16 @@ export function createWhisperClient(
 
 				// 2. run command in whisper.cpp directory
 				// TODO: add return for continually updated progress value
-				const transcript = await execute(effectiveOptions.executablePath, args);
+				const transcript = await execute(
+					effectiveOptions.executablePath,
+					args,
+					false,
+					options.signal,
+				);
+
+				if (options.signal?.aborted) {
+					throw new Error("Operation aborted");
+				}
 
 				// 3. parse whisper response string into array
 				return transcriptToArray(transcript.stdout.toString());
