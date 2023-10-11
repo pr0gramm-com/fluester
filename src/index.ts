@@ -44,11 +44,21 @@ export interface WhisperClient {
 	 * @param filePath The audio file to translate.
 	 * @param options
 	 * @returns English translation of the audio file. If it's already english, it will be a transcription.
+	 * @remarks Audio file must be in a processable format.
+	 * @throws If the model provided at {@link createWhisperClient} is not found.
 	 */
 	translate: (
 		filePath: string,
 		options: WhisperOptions,
 	) => Promise<TranscriptLine[]>;
+
+	/**
+	 * Detects the language of the audio file
+	 * @param filePath The audio file to detect the language of.
+	 * @returns `undefined` if there was an error or the language could not be detected.
+	 * @remarks Audio file must be in a processable format just like when using {@link translate}.
+	 * @throws If the model provided at {@link createWhisperClient} is not found.
+	 */
 	detectLanguage: (
 		filePath: string,
 	) => Promise<LanguageDetectionResult | undefined>;
