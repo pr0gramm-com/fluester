@@ -20,11 +20,11 @@ jobs:
 
       - run: npm ci
       - run: npm run ci
-      - run: npm test > test.tap
+      - run: npm test
 
       - uses: test-summary/action@v2
         with:
-          paths: "test.tap"
+          paths: "**/*.tap"
         if: always()
 
 

@@ -8,3 +8,4 @@ biome.json
 *.tgz
 tsconfig.json
 dist/test/
+*.tap
