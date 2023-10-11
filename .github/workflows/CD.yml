@@ -20,7 +20,7 @@ jobs:
 
       - run: npm ci
       - run: npm run ci
-      # - run: npm test
+      - run: npm test
 
   publish-package:
     runs-on: ubuntu-latest
