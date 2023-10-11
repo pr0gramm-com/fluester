@@ -19,7 +19,8 @@
     "format": "biome format --write src",
     "lint": "biome lint src",
     "lint:apply": "biome lint --apply src",
-    "test": "node dist/test.js"
+    "test": "tsc && node --test dist/**/*.test.js",
+    "test:ci": "tsc && node --test --test-reporter=tap --test-reporter-destination=test.tap dist/**/*.test.js"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.2.2",

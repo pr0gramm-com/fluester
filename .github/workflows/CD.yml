@@ -20,7 +20,14 @@ jobs:
 
       - run: npm ci
       - run: npm run ci
-      # - run: npm test
+      - run: npm test
+
+      - uses: test-summary/action@v2
+        with:
+          paths: "**/*.tap"
+        if: false
+        # disabled until the action fixes their TAP parsing
+        # if: always()
 
   publish-package:
     runs-on: ubuntu-latest
