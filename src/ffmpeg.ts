@@ -1,3 +1,5 @@
+import type { Readable, Writable } from "node:stream";
+
 import ffmpeg from "fluent-ffmpeg";
 import { path as ffmpegPath } from "@ffmpeg-installer/ffmpeg";
 import { path as ffprobePath } from "@ffprobe-installer/ffprobe";
@@ -36,5 +38,26 @@ export async function convertFileToProcessableFile(
 		command.once("end", resolve);
 		command.once("error", reject);
 		command.run();
+	});
+}
+
+export async function pipeStreamToProcessableStream(
+	input: Readable,
+	output: Writable,
+	_options?: ConvertOptions,
+): Promise<void> {
+	// const signal = options?.signal;
+
+	// Taken from the whisper.cpp docs:
+	// ffmpeg -i input.mp3 -ar 16000 -ac 1 -c:a pcm_s16le output.wav
+	const command = ffmpeg(input)
+		.audioFrequency(16000)
+		.audioChannels(1)
+		.audioCodec("pcm_s16le");
+
+	return new Promise((resolve, reject) => {
+		command.once("end", resolve);
+		command.once("error", reject);
+		command.pipe(output, { end: true });
 	});
 }

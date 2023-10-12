@@ -1,3 +1,5 @@
+import { Readable } from "node:stream";
+import { createWriteStream } from "node:fs";
 import * as assert from "node:assert/strict";
 import { describe, test } from "node:test";
 import * as fs from "node:fs/promises";
@@ -5,6 +7,7 @@ import * as path from "node:path";
 
 import {
 	convertFileToProcessableFile,
+	pipeStreamToProcessableStream,
 } from "./ffmpeg.js";
 
 // Taken from the samples dir:
@@ -13,25 +16,33 @@ const urls = {
 	a: "https://upload.wikimedia.org/wikipedia/commons/2/22/George_W._Bush%27s_weekly_radio_address_%28November_1%2C_2008%29.oga",
 };
 
+function fetchFile(url: string) {
+	return fetch(url)
+		.then((r) => r.arrayBuffer())
+		.then((ab) => new Uint8Array(ab));
+}
+
 describe("ffmpeg", () => {
-	/*
-	test("basic buffer conversion", async () => {
-		const res = await fetch(urls.a).then((r) => r.arrayBuffer());
-		const buffer = new Uint8Array(res);
+	test("basic file conversion", async () => {
+		await using tempDir = await TempDir.create("temp-fluester-test-");
 
-		const result = await convertBufferToProcessableFile(buffer);
+		const inputFileBuffer = await fetchFile(urls.a);
+		const input = Readable.from(inputFileBuffer);
 
-		assert.ok(result.length > 0);
+		const outFile = tempDir.file("out.wav");
+		const output = createWriteStream(outFile);
+
+		await pipeStreamToProcessableStream(input, output);
+
+		const actual = await fs.stat(outFile);
+		assert.ok(actual.size > 0);
 	});
-	*/
 
 	test("basic file conversion", async () => {
 		await using tempDir = await TempDir.create("temp-fluester-test-");
 
 		const inputFile = tempDir.file("inputFileBuffer.oga");
-		const inputFileBuffer = await fetch(urls.a)
-			.then((r) => r.arrayBuffer())
-			.then((ab) => new Uint8Array(ab));
+		const inputFileBuffer = await fetchFile(urls.a);
 
 		await fs.writeFile(inputFile, inputFileBuffer);
 
@@ -56,7 +67,7 @@ class TempDir implements AsyncDisposable {
 		return path.join(this.path, ...pathSegments);
 	}
 
-	async [Symbol.asyncDispose]() {
+	[Symbol.asyncDispose]() {
 		return fs.rm(this.path, { recursive: true, force: true });
 	}
 }
