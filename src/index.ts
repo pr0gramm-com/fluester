@@ -11,6 +11,7 @@ import transcriptToArray, {
 } from "./transcript.js";
 
 export { createWebVttString } from "./webvtt.js";
+export { convertFileToProcessableFile } from "./ffmpeg.js";
 
 export interface WhisperClientOptionsBase {
 	/** Path to the whisper executable */
