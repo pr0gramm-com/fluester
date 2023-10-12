@@ -5,7 +5,6 @@ import * as path from "node:path";
 
 import {
 	convertFileToProcessableFile,
-	convertBufferToProcessableFile,
 } from "./ffmpeg.js";
 
 // Taken from the samples dir:
