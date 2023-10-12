@@ -39,3 +39,20 @@ describe("ffmpeg", () => {
 		assert.ok(actual.size > 0);
 	});
 });
+
+class TempDir implements AsyncDisposable {
+	private constructor(public readonly path: string) {}
+
+	static async create(prefix: string): Promise<TempDir> {
+		const tempDir = await fs.mkdtemp(prefix);
+		return new TempDir(tempDir);
+	}
+
+	file(...pathSegments: string[]): string {
+		return path.join(this.path, ...pathSegments);
+	}
+
+	async [Symbol.asyncDispose]() {
+		return fs.rm(this.path, { recursive: true, force: true });
+	}
+}
