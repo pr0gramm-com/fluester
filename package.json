@@ -48,5 +48,8 @@
     "tts",
     "srt",
     "diarization"
-  ]
+  ],
+  "dependencies": {
+    "@ffmpeg/ffmpeg": "^0.12.7"
+  }
 }
