@@ -7,7 +7,7 @@ import { path as ffprobePath } from "@ffprobe-installer/ffprobe";
 ffmpeg.setFfmpegPath(ffmpegPath);
 ffmpeg.setFfprobePath(ffprobePath);
 
-// biome-ignore lint/suspicious/noEmptyInterface: <explanation>
+// biome-ignore lint/suspicious/noEmptyInterface: Reserved
 export interface ConvertOptions {
 	// TODO: Not yet supported:
 	// signal?: AbortSignal;
