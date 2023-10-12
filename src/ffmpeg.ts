@@ -1,6 +1,3 @@
-import * as path from "node:path";
-import * as fs from "node:fs/promises";
-
 import ffmpeg from "fluent-ffmpeg";
 import { path as ffmpegPath } from "@ffmpeg-installer/ffmpeg";
 import { path as ffprobePath } from "@ffprobe-installer/ffprobe";
@@ -14,11 +11,17 @@ export interface ConvertOptions {
 	// signal?: AbortSignal;
 }
 
+/**
+ * Converts a file to a file that whisper.cpp can work with.
+ *
+ * @param inputFile Any input file that ffmpeg supports. That means almost any audio or video file.
+ * @param outputFile
+ */
 export async function convertFileToProcessableFile(
 	inputFile: string,
 	outputFile: string,
 	_options?: ConvertOptions,
-) {
+): Promise<void> {
 	// const signal = options?.signal;
 
 	// Taken from the whisper.cpp docs:
