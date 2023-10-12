@@ -16,6 +16,14 @@ export interface ConvertOptions {
  *
  * @param inputFile Any input file that ffmpeg supports. That means almost any audio or video file.
  * @param outputFile
+ * @example
+ * ```
+ * const inputFile = "...";
+ * const outputFile = "output.wav";
+ * await convertFileToProcessableFile(inputFile, outputFile);
+ * // ...
+ *  await client.detectLanguage(outputFile);
+ ```
  */
 export async function convertFileToProcessableFile(
 	inputFile: string,

@@ -74,6 +74,19 @@ if(!result) {
 }
 ```
 
+### File Conversion
+You cannot use any file for processing, as whisper needs a special encoded wav file.
+This package ships a helper function that invokes the required ffmpeg commands, so you can convert your files easily:
+```js
+import { convertFileToProcessableFile } from "@pr0gramm/fluester";
+
+const inputFile = "...";
+const outputFile = "output.wav";
+await convertFileToProcessableFile(inputFile, outputFile);
+// ...
+ await client.detectLanguage(outputFile);
+```
+
 
 ## Tricks
 This library is designed to work well in dockerized environments.
