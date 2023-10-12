@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.2.2",
+    "@types/fluent-ffmpeg": "^2.1.22",
     "@types/node": "^20.8.4",
     "bun": "^1.0.4",
     "typedoc": "^0.25.2",
@@ -50,6 +51,7 @@
     "diarization"
   ],
   "dependencies": {
-    "@ffmpeg/ffmpeg": "^0.12.7"
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "fluent-ffmpeg": "^2.1.2"
   }
 }
