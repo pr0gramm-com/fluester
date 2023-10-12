@@ -1,7 +1,7 @@
 import * as assert from "node:assert/strict";
-import { describe, test } from "node:test";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
+import { describe, test } from "node:test";
 
 import { convertFileToProcessableFile } from "./ffmpeg.js";
 
