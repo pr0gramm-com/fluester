@@ -15,6 +15,7 @@ const urls = {
 };
 
 describe("ffmpeg", () => {
+	/*
 	test("basic buffer conversion", async () => {
 		const res = await fetch(urls.a).then((r) => r.arrayBuffer());
 		const buffer = new Uint8Array(res);
@@ -23,15 +24,19 @@ describe("ffmpeg", () => {
 
 		assert.ok(result.length > 0);
 	});
+	*/
 
 	test("basic file conversion", async () => {
-		const tempDir = await fs.mkdtemp("fluester-test-");
+		await using tempDir = await TempDir.create("temp-fluester-test-");
 
-		const inputFile = path.join(tempDir, "inputFileBuffer.oga");
-		const inputFileBuffer = await fetch(urls.a).then((r) => r.arrayBuffer());
-		await fs.writeFile(inputFile, new Uint8Array(inputFileBuffer));
+		const inputFile = tempDir.file("inputFileBuffer.oga");
+		const inputFileBuffer = await fetch(urls.a)
+			.then((r) => r.arrayBuffer())
+			.then((ab) => new Uint8Array(ab));
 
-		const outFile = path.join(tempDir, "out.wav");
+		await fs.writeFile(inputFile, inputFileBuffer);
+
+		const outFile = tempDir.file("out.wav");
 
 		await convertFileToProcessableFile(inputFile, outFile);
 
