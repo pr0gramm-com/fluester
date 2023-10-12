@@ -41,7 +41,9 @@ export async function convertFileToProcessableFile(
 	});
 }
 
-export async function pipeStreamToProcessableStream(
+// TODO: Not yet supported:
+/*
+async function pipeStreamToProcessableStream(
 	input: Readable,
 	output: Writable,
 	_options?: ConvertOptions,
@@ -61,3 +63,4 @@ export async function pipeStreamToProcessableStream(
 		command.pipe(output, { end: true });
 	});
 }
+*/

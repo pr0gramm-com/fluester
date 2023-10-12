@@ -1,14 +1,9 @@
-import { Readable } from "node:stream";
-import { createWriteStream } from "node:fs";
 import * as assert from "node:assert/strict";
 import { describe, test } from "node:test";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 
-import {
-	convertFileToProcessableFile,
-	pipeStreamToProcessableStream,
-} from "./ffmpeg.js";
+import { convertFileToProcessableFile } from "./ffmpeg.js";
 
 // Taken from the samples dir:
 // https://github.com/ggerganov/whisper.cpp/tree/master/samples
@@ -23,7 +18,8 @@ function fetchFile(url: string) {
 }
 
 describe("ffmpeg", () => {
-	test("basic file conversion", async () => {
+	/*
+	test("basic stream conversion", async () => {
 		await using tempDir = await TempDir.create("temp-fluester-test-");
 
 		const inputFileBuffer = await fetchFile(urls.a);
@@ -37,6 +33,7 @@ describe("ffmpeg", () => {
 		const actual = await fs.stat(outFile);
 		assert.ok(actual.size > 0);
 	});
+	*/
 
 	test("basic file conversion", async () => {
 		await using tempDir = await TempDir.create("temp-fluester-test-");
