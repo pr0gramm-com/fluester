@@ -27,39 +27,43 @@ export const modelFileNames: Record<ModelName, string> = {
 	medium: "ggml-medium.bin",
 	"medium.en": "ggml-medium.en.bin",
 	"large-v1": "ggml-large-v1.bin",
-	large: "ggml-large.bin",
+	"large-v2": "ggml-large-v2.bin",
+	"large-v3": "ggml-large-v3.bin",
 };
 
+/**
+ * Ref: https://github.com/ggerganov/whisper.cpp/tree/master/models
+ */
 export const modelStats: Record<ModelName, { disk: string; ram: string }> = {
-	tiny: {
-		disk: "75 MB",
-		ram: "~390 MB",
-	},
 	"tiny.en": {
 		disk: "75 MB",
 		ram: "~390 MB",
 	},
-	base: {
-		disk: "142 MB",
-		ram: "~500 MB",
+	tiny: {
+		disk: "75 MB",
+		ram: "~390 MB",
 	},
 	"base.en": {
 		disk: "142 MB",
 		ram: "~500 MB",
 	},
-	small: {
-		disk: "466 MB",
-		ram: "~1.0 GB",
+	base: {
+		disk: "142 MB",
+		ram: "~500 MB",
 	},
 	"small.en": {
 		disk: "466 MB",
 		ram: "~1.0 GB",
 	},
-	medium: {
+	small: {
+		disk: "466 MB",
+		ram: "~1.0 GB",
+	},
+	"medium.en": {
 		disk: "1.5 GB",
 		ram: "~2.6 GB",
 	},
-	"medium.en": {
+	medium: {
 		disk: "1.5 GB",
 		ram: "~2.6 GB",
 	},
@@ -67,8 +71,12 @@ export const modelStats: Record<ModelName, { disk: string; ram: string }> = {
 		disk: "2.9 GB",
 		ram: "~4.7 GB",
 	},
-	large: {
-		disk: "2.9 GB",
-		ram: "~4.7 GB",
+	"large-v2": {
+		disk: "2.9 GB", // TODO: Find correct size
+		ram: "~4.7 GB", // TODO: Find correct size
+	},
+	"large-v3": {
+		disk: "2.9 GB", // TODO: Find correct size
+		ram: "~4.7 GB", // TODO: Find correct size
 	},
 };
