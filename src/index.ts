@@ -123,12 +123,11 @@ export function createWhisperClient(
 		detectLanguage: async (filePath: string) => {
 			await ensureModel();
 
-			const result = await execute(effectiveOptions.executablePath, [
-				"--detect-language",
-				"-m",
-				effectiveOptions.modelPath,
-				filePath,
-			]);
+			const result = await execute(
+				effectiveOptions.executablePath,
+				["--detect-language", "-m", effectiveOptions.modelPath, filePath],
+				true,
+			);
 
 			// TODO: Check for probability threshold
 			return parseDetectedLanguage(result.stderr.toString());
