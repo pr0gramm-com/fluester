@@ -2,16 +2,17 @@ export const defaultModel = "base.en";
 
 // model list: https://github.com/ggerganov/whisper.cpp/#more-audio-samples
 export const modelList = [
-	"tiny",
 	"tiny.en",
-	"base",
+	"tiny",
 	"base.en",
-	"small",
+	"base",
 	"small.en",
-	"medium",
+	"small",
 	"medium.en",
+	"medium",
 	"large-v1",
-	"large",
+	"large-v2",
+	"large-v3",
 ] as const;
 
 export type ModelName = typeof modelList[number];
