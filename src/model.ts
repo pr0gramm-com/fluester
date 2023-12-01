@@ -15,7 +15,7 @@ export const modelList = [
 	"large-v3",
 ] as const;
 
-export type ModelName = typeof modelList[number];
+export type ModelName = (typeof modelList)[number];
 
 export const modelFileNames: Record<ModelName, string> = {
 	tiny: "ggml-tiny.bin",
