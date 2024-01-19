@@ -23,10 +23,10 @@
     "test:ci": "tsc && node --test --test-reporter=tap --test-reporter-destination=test.tap **/*.test.js"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.5.0",
+    "@biomejs/biome": "^1.5.2",
     "@types/fluent-ffmpeg": "^2.1.24",
-    "@types/node": "^20.10.8",
-    "bun": "^1.0.22",
+    "@types/node": "^20.11.5",
+    "bun": "^1.0.23",
     "typedoc": "^0.25.7",
     "typescript": "^5.3.3"
   },
