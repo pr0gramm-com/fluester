@@ -3,10 +3,10 @@ import * as path from "node:path";
 
 import { execute } from "./execute.js";
 import { defaultExecutablePath, nodeModulesModelPath } from "./interop.js";
-import { ModelName, modelFileNames } from "./model.js";
+import { type ModelName, modelFileNames } from "./model.js";
 import transcriptToArray, {
-	LanguageDetectionResult,
-	TranscriptLine,
+	type LanguageDetectionResult,
+	type TranscriptLine,
 	parseDetectedLanguage,
 } from "./transcript.js";
 
