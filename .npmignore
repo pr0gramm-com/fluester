@@ -10,3 +10,4 @@ tsconfig.json
 *.tap
 *.test.js
 *.test.d.ts
+!/lib/**
