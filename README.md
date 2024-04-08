@@ -33,6 +33,15 @@ You can do this using ffmpeg (example [taken from the whisper project](https://g
 ```sh
 ffmpeg -i input.mp3 -ar 16000 -ac 1 -c:a pcm_s16le output.wav
 ```
+OR
+Use the provided helper to convert the audio file:
+```ts
+import { convertFileToProcessableFile } from "@pr0gramm/fluester";
+
+const inputFile = "input.mp3";
+const outputFile = "output.wav";
+await convertFileToProcessableFile(inputFile, outputFile);
+```
 
 ### Translation
 ```js
@@ -73,20 +82,6 @@ if(!result) {
   console.log("Did not detect anything :(");
 }
 ```
-
-### File Conversion
-You cannot use any file for processing, as whisper needs a special encoded wav file.
-This package ships a helper function that invokes the required ffmpeg commands, so you can convert your files easily:
-```js
-import { convertFileToProcessableFile } from "@pr0gramm/fluester";
-
-const inputFile = "...";
-const outputFile = "output.wav";
-await convertFileToProcessableFile(inputFile, outputFile);
-// ...
- await client.detectLanguage(outputFile);
-```
-
 
 ## Tricks
 This library is designed to work well in dockerized environments.
