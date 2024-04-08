@@ -106,6 +106,7 @@ export function createWhisperClient(
 					"-tr",
 					"-m",
 					effectiveOptions.modelPath,
+					options.sourceLanguage ? `-l ${options.sourceLanguage}` : "",
 					"-f",
 					filePath,
 				];
@@ -140,6 +141,7 @@ export function createWhisperClient(
 					...flags,
 					"-m",
 					effectiveOptions.modelPath,
+					options.sourceLanguage ? `-l ${options.sourceLanguage}` : "",
 					"-f",
 					filePath,
 				];
