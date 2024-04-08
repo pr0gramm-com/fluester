@@ -44,13 +44,23 @@ export interface WhisperOptions {
 
 export interface WhisperClient {
 	/**
-	 * @param filePath The audio file to translate.
+	 * @param filePath The audio file to translate. **Audio file must be in a processable format.**
 	 * @param options
 	 * @returns English translation of the audio file. If it's already english, it will be a transcription.
-	 * @remarks Audio file must be in a processable format.
 	 * @throws If the model provided at {@link createWhisperClient} is not found.
 	 */
 	translate: (
+		filePath: string,
+		options: WhisperOptions,
+	) => Promise<TranscriptLine[]>;
+
+	/**
+	 * @param filePath The audio file to transcribe. **Audio file must be in a processable format.**
+	 * @param options
+	 * @returns Transcription of the audio file.
+	 * @throws If the model provided at {@link createWhisperClient} is not found.
+	 */
+	transcribe: (
 		filePath: string,
 		options: WhisperOptions,
 	) => Promise<TranscriptLine[]>;
@@ -87,7 +97,41 @@ export function createWhisperClient(
 			await ensureModel();
 
 			try {
-				// 1. create command string for whisper.cpp
+				const flags = options.whisperOptions
+					? getFlags(options.whisperOptions)
+					: [];
+
+				const args = [
+					...flags,
+					"-tr",
+					"-m",
+					effectiveOptions.modelPath,
+					"-f",
+					filePath,
+				];
+
+				// TODO: add return for continually updated progress value
+				const translation = await execute(
+					effectiveOptions.executablePath,
+					args,
+					false,
+					options.signal,
+				);
+
+				if (options.signal?.aborted) {
+					throw new Error("Operation aborted");
+				}
+
+				return transcriptToArray(translation.stdout.toString());
+			} catch (cause) {
+				throw new Error("Error during whisper operation", { cause });
+			}
+		},
+
+		transcribe: async (filePath: string, options: WhisperOptions) => {
+			await ensureModel();
+
+			try {
 				const flags = options.whisperOptions
 					? getFlags(options.whisperOptions)
 					: [];
@@ -100,9 +144,8 @@ export function createWhisperClient(
 					filePath,
 				];
 
-				// 2. run command in whisper.cpp directory
 				// TODO: add return for continually updated progress value
-				const transcript = await execute(
+				const transcription = await execute(
 					effectiveOptions.executablePath,
 					args,
 					false,
@@ -113,8 +156,7 @@ export function createWhisperClient(
 					throw new Error("Operation aborted");
 				}
 
-				// 3. parse whisper response string into array
-				return transcriptToArray(transcript.stdout.toString());
+				return transcriptToArray(transcription.stdout.toString());
 			} catch (cause) {
 				throw new Error("Error during whisper operation", { cause });
 			}
