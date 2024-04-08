@@ -51,7 +51,7 @@ export interface WhisperClient {
 	 */
 	translate: (
 		filePath: string,
-		options: WhisperOptions,
+		options?: WhisperOptions,
 	) => Promise<TranscriptLine[]>;
 
 	/**
@@ -62,7 +62,7 @@ export interface WhisperClient {
 	 */
 	transcribe: (
 		filePath: string,
-		options: WhisperOptions,
+		options?: WhisperOptions,
 	) => Promise<TranscriptLine[]>;
 
 	/**
@@ -93,11 +93,11 @@ export function createWhisperClient(
 	}
 
 	return {
-		translate: async (filePath: string, options: WhisperOptions) => {
+		translate: async (filePath: string, options?: WhisperOptions) => {
 			await ensureModel();
 
 			try {
-				const flags = options.whisperOptions
+				const flags = options?.whisperOptions
 					? getFlags(options.whisperOptions)
 					: [];
 
@@ -106,7 +106,7 @@ export function createWhisperClient(
 					"-tr",
 					"-m",
 					effectiveOptions.modelPath,
-					options.sourceLanguage ? `-l ${options.sourceLanguage}` : "",
+					options?.sourceLanguage ? `-l ${options.sourceLanguage}` : "",
 					"-f",
 					filePath,
 				];
@@ -116,10 +116,10 @@ export function createWhisperClient(
 					effectiveOptions.executablePath,
 					args,
 					false,
-					options.signal,
+					options?.signal,
 				);
 
-				if (options.signal?.aborted) {
+				if (options?.signal?.aborted) {
 					throw new Error("Operation aborted");
 				}
 
@@ -129,11 +129,11 @@ export function createWhisperClient(
 			}
 		},
 
-		transcribe: async (filePath: string, options: WhisperOptions) => {
+		transcribe: async (filePath: string, options?: WhisperOptions) => {
 			await ensureModel();
 
 			try {
-				const flags = options.whisperOptions
+				const flags = options?.whisperOptions
 					? getFlags(options.whisperOptions)
 					: [];
 
@@ -141,7 +141,7 @@ export function createWhisperClient(
 					...flags,
 					"-m",
 					effectiveOptions.modelPath,
-					options.sourceLanguage ? `-l ${options.sourceLanguage}` : "",
+					options?.sourceLanguage ? `-l ${options.sourceLanguage}` : "",
 					"-f",
 					filePath,
 				];
@@ -151,10 +151,10 @@ export function createWhisperClient(
 					effectiveOptions.executablePath,
 					args,
 					false,
-					options.signal,
+					options?.signal,
 				);
 
-				if (options.signal?.aborted) {
+				if (options?.signal?.aborted) {
 					throw new Error("Operation aborted");
 				}
 
