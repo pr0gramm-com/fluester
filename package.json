@@ -18,7 +18,7 @@
     "ci": "biome ci src",
     "format": "biome format --write src",
     "lint": "biome lint src",
-    "lint:apply": "biome lint --apply src",
+    "lint:fix": "biome lint --write ./src && biome check --write ./src",
     "test": "tsc && node --test **/*.test.js",
     "test:ci": "tsc && node --test --test-reporter=tap --test-reporter-destination=test.tap **/*.test.js"
   },
