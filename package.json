@@ -25,11 +25,11 @@
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "@types/fluent-ffmpeg": "^2.1.24",
-    "@types/node": "^20.14.9",
-    "bun": "^1.1.17",
-    "lefthook": "^1.6.18",
+    "@types/node": "^20.14.10",
+    "bun": "^1.1.18",
+    "lefthook": "^1.7.1",
     "typedoc": "^0.26.3",
-    "typescript": "^5.5.2"
+    "typescript": "^5.5.3"
   },
   "repository": {
     "type": "git",
