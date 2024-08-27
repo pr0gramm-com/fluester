@@ -24,11 +24,11 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
-    "@types/fluent-ffmpeg": "^2.1.25",
-    "@types/node": "^22.3.0",
-    "bun": "^1.1.24",
-    "lefthook": "^1.7.13",
-    "typedoc": "^0.26.5",
+    "@types/fluent-ffmpeg": "^2.1.26",
+    "@types/node": "^22.5.0",
+    "bun": "^1.1.26",
+    "lefthook": "^1.7.14",
+    "typedoc": "^0.26.6",
     "typescript": "^5.5.4"
   },
   "repository": {
