@@ -12,11 +12,11 @@
     "compile-whisper": "dist/script/compile.js"
   },
   "scripts": {
-    "start": "bun --watch src/index.ts",
+    "start": "bun --watch ./src/index.ts",
     "build": "tsc",
-    "build:docs": "typedoc --out docs src/index.ts",
+    "build:docs": "typedoc --out docs ./src/index.ts",
     "ci": "biome ci src",
-    "format": "biome format --write src",
+    "format": "biome format --write ./src",
     "lint": "biome lint src",
     "lint:fix": "biome lint --write ./src && biome check --write ./src",
     "test": "tsc && node --test **/*.test.js",
