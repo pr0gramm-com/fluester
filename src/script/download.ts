@@ -32,7 +32,10 @@ async function determineModel() {
 		return envModel;
 	}
 
-	const rl = createInterface({ input: process.stdin, output: process.stdout });
+	const rl = createInterface({
+		input: process.stdin,
+		output: process.stdout,
+	});
 
 	console.log("Which model should be downloaded?");
 	console.log("You can skip this question by:");

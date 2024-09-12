@@ -88,7 +88,9 @@ export function createWhisperClient(
 
 	async function ensureModel() {
 		if (!(await fs.stat(effectiveOptions.modelPath))) {
-			throw new Error(`Model not found at "${effectiveOptions.modelPath}".`);
+			throw new Error(
+				`Model not found at "${effectiveOptions.modelPath}".`,
+			);
 		}
 	}
 
@@ -173,7 +175,12 @@ export function createWhisperClient(
 
 			const result = await execute(
 				effectiveOptions.executablePath,
-				["--detect-language", "-m", effectiveOptions.modelPath, filePath],
+				[
+					"--detect-language",
+					"-m",
+					effectiveOptions.modelPath,
+					filePath,
+				],
 				true,
 			);
 
