@@ -11,3 +11,4 @@ tsconfig.json
 *.test.js
 *.test.d.ts
 !/lib/**
+lefthook.*
