@@ -15,7 +15,7 @@ jobs:
           submodules: true # needed for the whisper.cpp submodule
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 23
           cache: npm
 
       - run: npm ci --legacy-peer-deps
@@ -41,7 +41,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 23
           registry-url: "https://registry.npmjs.org"
           cache: npm
 
