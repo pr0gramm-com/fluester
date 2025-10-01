@@ -21,7 +21,7 @@ jobs:
         with:
           submodules: true # needed for the whisper.cpp submodule
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
